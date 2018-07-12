@@ -1,0 +1,38 @@
+---
+# tasks file for zennode
+- name: Check required base variables
+  assert:
+    that:
+      - user_groups is defined
+      - user_home is defined
+      - user_name is defined
+    msg: Missing required variables
+
+# Group and user creation
+- name: Create groups
+  group:
+    name: "{{ item }}"
+  loop: "{{ user_groups }}"
+
+- name: Create user
+  user:
+    name: "{{ user_name }}"
+    comment: "{{ user_name }}"
+    shell: /bin/bash
+    groups: "{{ user_groups | join(',') }}"
+    home: "{{ user_home }}"
+
+# Packages
+- name: apt update
+  apt: update_cache=yes
+- name: Install base packages
+  apt:
+    name: "{{ item }}"
+  loop:
+    - lsb-release
+    - curl
+    - tar
+
+- import_tasks: tasks/network.yml
+  when: skip_network == false
+- import_tasks: tasks/zend.yml
