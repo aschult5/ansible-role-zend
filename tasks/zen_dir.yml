@@ -1,0 +1,46 @@
+- name: Check required zen_dir variables
+  assert:
+    that:
+      - zennode_user_name is defined
+      - zennode_zen_conf is defined
+      - zennode_zen_dir is defined
+      - zennode_skip_blockchain is defined
+    msg: Required variable missing.
+
+# Zen directory setup
+- name: Create zen directory
+  file:
+    path: "{{ zennode_zen_dir }}"
+    state: directory
+    owner: "{{ zennode_user_name }}"
+
+- name: Zen configuration file
+  template:
+    src: files/zen_conf.j2
+    dest: "{{ zennode_zen_conf }}"
+    owner: "{{ zennode_user_name }}"
+    mode: 0644
+
+- import_tasks: zen_chain.yml
+  when: zennode_skip_blockchain == false
+
+- name: Check for seed wallet
+  local_action: stat path="files/wallets/{{ inventory_hostname }}"
+  register: stat_wallet
+
+- name: Emplace wallet
+  copy:
+    remote_src: no
+    src: "files/wallets/{{ inventory_hostname }}"
+    dest: "{{ zennode_zen_dir }}/wallet.dat"
+    owner: "{{ zennode_user_name }}"
+    mode: 0600
+    backup: yes
+  when: stat_wallet.stat.exists
+
+- name: Set zen directory owner
+  file:
+    path: "{{ zennode_zen_dir }}"
+    state: directory
+    owner: "{{ zennode_user_name }}"
+    recurse: yes

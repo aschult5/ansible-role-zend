@@ -1,0 +1,94 @@
+- name: Check required zend variables
+  assert:
+    that:
+      - zennode_user_home is defined
+      - zennode_user_name is defined
+      - zennode_zen_dir is defined
+      - zennode_zend_svc_name is defined
+    msg: Required variable missing.
+
+- name: Stop zend service before making changes
+  service:
+    name: "{{ zennode_zend_svc_name }}.service"
+    state: stopped
+  ignore_errors: yes
+
+# Setup directory
+- import_tasks: zen_dir.yml
+  when: zennode_skip_zendir == false
+
+# Install zen
+- name: Install apt-transport-https
+  apt: name=apt-transport-https
+- name: Zen package repo key
+  block:
+    - name: zen repo key (sks-keyservers)
+      apt_key:
+        keyserver: ha.pool.sks-keyservers.net
+        id: 219F55740BBF7A1CE368BA45FB7053CE4991B669
+  rescue:
+    - name: zen repo key (ubuntu)
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: 219F55740BBF7A1CE368BA45FB7053CE4991B669
+- name: Setup zencash repository
+  apt_repository:
+    repo: "deb https://zencashofficial.github.io/repo/ {{ ansible_lsb.codename }} main"
+- name: Install zen to latest
+  apt:
+    name: zen
+    state: latest
+
+- name: Install wget
+  apt: name=wget
+- name: zen-fetch-params block
+  block:
+    - name: zen-fetch-params
+      command: zen-fetch-params
+      args:
+        creates: "{{ zennode_user_home }}/.zcash-params"
+  rescue:
+    - name: Cleanup zen-fetch-params
+      file:
+        path: "{{ zennode_user_home }}/.zcash-params"
+        state: absent
+  become: yes
+  become_user: "{{ zennode_user_name }}"
+  become_method: su
+  when: zennode_skip_blockchain == false
+
+- name: Zend Service
+  block:
+    - name: Create zend service file
+      copy:
+        dest: "/lib/systemd/system/{{ zennode_zend_svc_name }}.service"
+        owner: root
+        content: |
+          [Unit]
+          Description=ZenCash daemon
+
+          [Service]
+          User={{ zennode_user_name }}
+          Type=forking
+          ExecStart=/usr/bin/zend -daemon -pid={{ zennode_zen_dir }}/zend.pid
+          PIDFile={{ zennode_zen_dir }}/zend.pid
+          Restart=always
+          RestartSec=10
+
+          [Install]
+          WantedBy=multi-user.target
+      register: zend_svc_file
+
+    - name: Systemd daemon-reload
+      systemd:
+        daemon_reload: true
+      when: zend_svc_file.changed
+
+    # Activate zend
+    - name: Start and enable zend service
+      service:
+        name: "{{ zennode_zend_svc_name }}.service"
+        enabled: yes
+        state: started
+      register: zend_service
+  when: zennode_skip_services == false

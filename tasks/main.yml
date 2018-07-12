@@ -3,24 +3,25 @@
 - name: Check required base variables
   assert:
     that:
-      - user_groups is defined
-      - user_home is defined
-      - user_name is defined
+      - zennode_user_groups is defined
+      - zennode_user_home is defined
+      - zennode_user_name is defined
+      - zennode_skip_network is defined
     msg: Missing required variables
 
 # Group and user creation
 - name: Create groups
   group:
     name: "{{ item }}"
-  loop: "{{ user_groups }}"
+  loop: "{{ zennode_user_groups }}"
 
 - name: Create user
   user:
-    name: "{{ user_name }}"
-    comment: "{{ user_name }}"
+    name: "{{ zennode_user_name }}"
+    comment: "{{ zennode_user_name }}"
     shell: /bin/bash
-    groups: "{{ user_groups | join(',') }}"
-    home: "{{ user_home }}"
+    groups: "{{ zennode_user_groups | join(',') }}"
+    home: "{{ zennode_user_home }}"
 
 # Packages
 - name: apt update
@@ -34,5 +35,5 @@
     - tar
 
 - import_tasks: tasks/network.yml
-  when: skip_network == false
-- import_tasks: tasks/zend.yml
+  when: zennode_skip_network == false
+- import_tasks: zend.yml
