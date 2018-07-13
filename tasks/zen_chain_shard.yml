@@ -1,7 +1,8 @@
 - name: Check required zen_chain_shard variables
   assert:
     that:
-      - zen_dir is defined
+      - zennode_user_name is defined
+      - zennode_zen_dir is defined
       - zen_chain_shard is defined
       - gdrive_svc_acct is defined
     msg: Required variable missing.
@@ -16,8 +17,8 @@
   unarchive:
     remote_src: yes
     src: "/tmp/{{ zen_chain_shard.name }}"
-    dest: "{{ zen_dir }}"
-    owner: "{{ user_name }}"
+    dest: "{{ zennode_zen_dir }}"
+    owner: "{{ zennode_user_name }}"
 
 # Delete archive to save space
 - name: Delete blockchain archive
