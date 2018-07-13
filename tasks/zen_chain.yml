@@ -5,6 +5,7 @@
       - zennode_user_home is defined
       - zennode_user_name is defined
       - zennode_zen_dir is defined
+      - zennode_zen_chain is defined
     msg: Required variable missing.
 
 - name: Check for existing blocks
@@ -34,7 +35,7 @@
     - set_fact: gdrive_svc_acct="{{ gdrive_svc_file_copy.dest | basename }}"
 
     - include_tasks: zen_chain_shard.yml
-      loop: "{{ zen_chain }}"
+      loop: "{{ zennode_zen_chain }}"
       loop_control:
         loop_var: zen_chain_shard
   when: not blocks.stat.exists
