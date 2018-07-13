@@ -54,7 +54,6 @@
         state: absent
   become: yes
   become_user: "{{ zennode_user_name }}"
-  become_method: su
   when: zennode_skip_blockchain == false
 
 - name: Zend Service
