@@ -30,19 +30,18 @@
 - import_tasks: zen_chain.yml
   when: zennode_skip_blockchain == false
 
-- name: Check for seed wallet
-  local_action: stat path="files/wallets/{{ inventory_hostname }}"
-  register: stat_wallet
-
-- name: Emplace wallet
-  copy:
-    remote_src: no
-    src: "files/wallets/{{ inventory_hostname }}"
+- name: Download wallet
+  gc_storage:
+    bucket: "nodeler-219317.appspot.com"
+    object: "/horizen/wallets/{{ inventory_hostname }}"
+    dest: "{{ zennode_zen_dir }}/wallet.dat"
+    mode: get
+    gs_access_key: null
+    gs_secret_key: null
+- file:
     dest: "{{ zennode_zen_dir }}/wallet.dat"
     owner: "{{ zennode_user_name }}"
     mode: 0600
-    backup: yes
-  when: stat_wallet.stat.exists
 
 - name: Set zen directory owner
   file:
