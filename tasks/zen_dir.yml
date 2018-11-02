@@ -30,12 +30,18 @@
 - import_tasks: zen_chain.yml
   when: zennode_skip_blockchain == false
 
+# gc_storage dependencies
+- name: Install python3-pip
+  apt: name=python3-pip
+- name: Install boto
+  pip: name=boto
 - name: Download wallet
   gc_storage:
     bucket: "nodeler-219317.appspot.com"
     object: "/horizen/wallets/{{ inventory_hostname }}"
     dest: "{{ zennode_zen_dir }}/wallet.dat"
     mode: get
+    force: no
     gs_access_key: null
     gs_secret_key: null
 - file:
