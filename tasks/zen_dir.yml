@@ -41,9 +41,8 @@
     object: "/horizen/wallets/{{ inventory_hostname }}"
     dest: "{{ zennode_zen_dir }}/wallet.dat"
     mode: get
-    force: no
-    gs_access_key: null
-    gs_secret_key: null
+    gs_access_key: "{{ lookup('env', 'GS_ACCESS_KEY_ID') }}"
+    gs_secret_key: "{{ lookup('env', 'GS_SECRET_ACCESS_KEY') }}"
 - file:
     dest: "{{ zennode_zen_dir }}/wallet.dat"
     owner: "{{ zennode_user_name }}"
