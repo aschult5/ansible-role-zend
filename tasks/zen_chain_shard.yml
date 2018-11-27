@@ -12,6 +12,10 @@
   args:
     chdir: /tmp
     creates: "/tmp/{{ zen_chain_shard.name }}"
+  register: result
+  until: result is success
+  retries: 5
+  delay: 10
 
 - name: Extract blockchain
   unarchive:
