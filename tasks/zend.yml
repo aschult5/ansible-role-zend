@@ -47,6 +47,10 @@
       command: zen-fetch-params
       args:
         creates: "{{ zennode_user_home }}/.zcash-params"
+      register: result
+      until: result is success
+      retries: 5
+      delay: 10
   rescue:
     - name: Cleanup zen-fetch-params
       file:
