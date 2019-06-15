@@ -31,9 +31,6 @@
 - import_tasks: zen_chain.yml
   when: zennode_skip_blockchain == false
 
-- import_tasks: zen_wallet.yml
-  when: zennode_skip_wallet == false
-
 - name: Set zen directory owner
   file:
     path: "{{ zennode_zen_dir }}"
