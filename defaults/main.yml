@@ -9,3 +9,4 @@ zennode_skip_blockchain: false
 zennode_skip_services: false
 zennode_skip_network: false
 zennode_skip_zendir: false
+zennode_skip_wallet: false
