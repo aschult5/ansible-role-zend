@@ -9,6 +9,9 @@
       - zennode_skip_network is defined
     msg: Missing required variables
 
+# Setup necessary swap
+- import_tasks: swap.yml
+
 # Group and user creation
 - name: Create groups
   group:

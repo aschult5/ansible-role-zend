@@ -1,0 +1,45 @@
+- name: Check required swap variables
+  assert:
+    that:
+      - swap_file is defined and swap_size is defined
+    msg: "swap_file and swap_size variables must be defined."
+
+- debug:
+    msg: "Creating {{ swap_size }} swap file at {{ swap_file }}"
+
+- name: Allocate swap file
+  command: "fallocate -l {{ swap_size }} {{ swap_file }}"
+  args:
+    creates: "{{ swap_file }}"
+  register: swapfile_create
+
+- name: Set swappiness
+  copy:
+    dest: /etc/sysctl.d/69-swappiness.conf
+    content: "vm.swappiness={{ swappiness }}"
+  when: swappiness is defined
+
+- name: Update swap block
+  block:
+    - name: Swap file attributes
+      file:
+        path: "{{ swap_file }}"
+        mode: 0600
+    - name: mkswap
+      command: mkswap "{{ swap_file }}"
+    - name: swapon
+      command: swapon "{{ swap_file }}"
+    - name: swap fstab entry
+      mount:
+        src: "{{ swap_file }}"
+        path: none
+        fstype: swap
+        opts: sw
+        state: present
+  rescue:
+    # Above block must succeed, otherwise start over.
+    - name: swap file delete
+      file:
+        path: "{{ swap_file }}"
+        state: absent
+  when: swapfile_create.changed
