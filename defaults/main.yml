@@ -10,3 +10,627 @@ zennode_skip_services: false
 zennode_skip_network: false
 zennode_skip_zendir: false
 zennode_skip_wallet: false
+swap_file: /swapfile
+swappiness: 10
+zennode_zen_chain: [
+    {
+        id: '1Jx3M344It8fz27t88y5FgFiakQcOSJ0K',
+        name: 'blocks_00000.tar'
+    },
+    {
+        id: '19NI5cCwGtAjO5X87xhlCdhRWH33wGNHa',
+        name: 'blocks_00001.tar'
+    },
+    {
+        id: '19nYU5i5SParAtfNv7adE2s4eLlK68iAR',
+        name: 'blocks_00002.tar'
+    },
+    {
+        id: '1LMWRXktZ3lQRIjr7PXezZ8Ri2oB-rSLB',
+        name: 'blocks_00003.tar'
+    },
+    {
+        id: '1PsBGK_4zG9hzQZyzpFFsremGSLUD2sIq',
+        name: 'blocks_00004.tar'
+    },
+    {
+        id: '14HOutwKSEWuu3qgx7ccUEmOkS-WbtBoe',
+        name: 'blocks_00005.tar'
+    },
+    {
+        id: '1hTKmAmHFxjKHEOzQX2sLGUlaz76_LFZR',
+        name: 'blocks_00006.tar'
+    },
+    {
+        id: '13VnuihNMMKiBWKyPRqjg62Gd9ogAIFPe',
+        name: 'blocks_00007.tar'
+    },
+    {
+        id: '1NZZPq5seI7r--jfU4k35WnoKAX9OrDNq',
+        name: 'blocks_00008.tar'
+    },
+    {
+        id: '1157U5nSNtSyuWCpBeQQQs_DjH1WwqALt',
+        name: 'blocks_00009.tar'
+    },
+    {
+        id: '1QQEEtFvISOKZpbf2Wiwyhjc0VZwVnsf_',
+        name: 'blocks_00010.tar'
+    },
+    {
+        id: '1bIFewuo4ReaQl5e2zlfPOsLc1Ap0CY-3',
+        name: 'blocks_00011.tar'
+    },
+    {
+        id: '1hL63SGuPhMy-J83TZcbsSoqJmxbZMVun',
+        name: 'blocks_00012.tar'
+    },
+    {
+        id: '137yLdBmmmh7D81khenO6GHQZ6dayZrL7',
+        name: 'blocks_00013.tar'
+    },
+    {
+        id: '1YB6NUIRVu8R_adPrBM-wi81UEPIQgrAM',
+        name: 'blocks_00014.tar'
+    },
+    {
+        id: '1s9olH8x2fsKsdtV0VU2_Ulfp0BK1R1_B',
+        name: 'blocks_00015.tar'
+    },
+    {
+        id: '13Sd-Ozo0LmVHMWlJFPL6affrGd-X-xme',
+        name: 'blocks_00016.tar'
+    },
+    {
+        id: '1wpOro2mMQmIs9sF3XsjEEewdVFQgU7I5',
+        name: 'blocks_00017.tar'
+    },
+    {
+        id: '1TFW09O8c8tgw217yzC1HlIpXV40tzNCN',
+        name: 'blocks_00018.tar'
+    },
+    {
+        id: '1BCkVs2xRell0_dioWvNQKJj0vBKaAPIq',
+        name: 'blocks_00019.tar'
+    },
+    {
+        id: '1cY4BvyA76k9p3CZwfJcEohdZbi5s-J4Y',
+        name: 'blocks_00020.tar'
+    },
+    {
+        id: '1UZv5NXp0tQCs6-wpdB1yYZcqaRsdUaWz',
+        name: 'blocks_00021.tar'
+    },
+    {
+        id: '1cZlGHlORgQ_r3F1yhFHkPY4_Xi4d6SBI',
+        name: 'blocks_00022.tar'
+    },
+    {
+        id: '1G2mh1eCH15iLWs6RtJNaS3WpeMndKPf2',
+        name: 'blocks_00023.tar'
+    },
+    {
+        id: '19W2Wc6_9V5fpTXdDhuw4qLehCCHCdarR',
+        name: 'blocks_00024.tar'
+    },
+    {
+        id: '1ePCw61NUVhdOmr8LA69D1UbC6qrmFAFA',
+        name: 'blocks_00025.tar'
+    },
+    {
+        id: '1e7LXl29dPNK_NLIlquqb3bVjiNAxW9N6',
+        name: 'blocks_00026.tar'
+    },
+    {
+        id: '1kHPGCcEBKldwT4CiArUrqdI0h_C4BlA6',
+        name: 'blocks_00027.tar'
+    },
+    {
+        id: '16wswNek-e8IPm8hIBMLqfkRahS7v2RFH',
+        name: 'blocks_00028.tar'
+    },
+    {
+        id: '1PYGS4D3QglZ48QnilCcHv98CdXrIbq-U',
+        name: 'blocks_00029.tar'
+    },
+    {
+        id: '1LPKyk4rjjUzzGEiISlNxFN2OL4_wx7KX',
+        name: 'blocks_00030.tar'
+    },
+    {
+        id: '13ViMBmsNETmp0n8U0ojPlnPOGUSMAJqP',
+        name: 'blocks_00031.tar'
+    },
+    {
+        id: '1y20kPwCShZrpac9Ar35bN2c59LvYHbpQ',
+        name: 'blocks_00032.tar'
+    },
+    {
+        id: '1Je5IPrXgmTcD-4MvRWzCCn5Gcv-N6cSe',
+        name: 'blocks_00033.tar'
+    },
+    {
+        id: '1nRT53LI_n8sbDWw_0uyQh9kTj-a7dhLi',
+        name: 'blocks_00034.tar'
+    },
+    {
+        id: '1tnOKdN9ecuIXdeG1L4HA1IFFstVY3ycM',
+        name: 'blocks_00035.tar'
+    },
+    {
+        id: '1odYQD4SGoaapUAgvFKJcZ5WHDL-XM-Mn',
+        name: 'blocks_00036.tar'
+    },
+    {
+        id: '1np5YkbUFIrsf5f5Z9VlVGf80_uyiSe5v',
+        name: 'blocks_00037.tar'
+    },
+    {
+        id: '17UpSNl2ox5JQs2Up4xX1NxDkbtnMVqNA',
+        name: 'blocks_00038.tar'
+    },
+    {
+        id: '1iKEvuLLB_EWWu4NH263qGSL7CDWFJlO0',
+        name: 'blocks_00039.tar'
+    },
+    {
+        id: '1-IpehMewtqX-u3bMkA8SRrz8xcZx8SXt',
+        name: 'blocks_00040.tar'
+    },
+    {
+        id: '1F47WRNfH3zNSsCyE-al1IvE86xonMa4c',
+        name: 'blocks_00041.tar'
+    },
+    {
+        id: '1UTKjq98kzrh_4s_55tuxNR_yR5GHK3QH',
+        name: 'blocks_00042.tar'
+    },
+    {
+        id: '1BRTtuShOILWyEha0hcuUzuKRj5_oDAbo',
+        name: 'blocks_00043.tar'
+    },
+    {
+        id: '1uLWp1-n0RUIxevEyXX0qj5mKLfdGv-ok',
+        name: 'blocks_00044.tar'
+    },
+    {
+        id: '1IK5vRgIWfybIxKsJl5gI9165fSGny1OB',
+        name: 'blocks_00045.tar'
+    },
+    {
+        id: '17v56KcZGufIXFGRWCTHlTfWaKM-SMVfm',
+        name: 'blocks_00046.tar'
+    },
+    {
+        id: '1X2dWBMXFrefhQ_8wTMJh9MsFPFD3QnC4',
+        name: 'blocks_00047.tar'
+    },
+    {
+        id: '1UVFK07yvaK6He0lr6IzXVB1Jw1N0i1TP',
+        name: 'blocks_00048.tar'
+    },
+    {
+        id: '1-EB2axdv1a3wZZf4aeyVnQF-OQnwUL3S',
+        name: 'blocks_00049.tar'
+    },
+    {
+        id: '1LwAsLxyQLtV0HAO8AQM3kHihffPQAO48',
+        name: 'blocks_00050.tar'
+    },
+    {
+        id: '1zqbPViy9-FBnj9zLgk_8Y0oOXeuTzwEy',
+        name: 'blocks_00051.tar'
+    },
+    {
+        id: '1j8cgd3b-T5kuut8fWN-GRUNeQBq-iurO',
+        name: 'blocks_00052.tar'
+    },
+    {
+        id: '1u-3k5n6EU_qXhM6dhIA8fhkN5UrWvp5_',
+        name: 'blocks_00053.tar'
+    },
+    {
+        id: '1uy3apEg7kXGEoYZ39J2cAqxcXtXO6hP1',
+        name: 'blocks_00054.tar'
+    },
+    {
+        id: '1NakJerZXncnd9XO0Rwo6hdoEgsDFrMFI',
+        name: 'blocks_00055.tar'
+    },
+    {
+        id: '1ksZY7583bz_lrOqWb6jtCjVK3XQZ1q-q',
+        name: 'blocks_00056.tar'
+    },
+    {
+        id: '1jTNtMq254-KkdOIRm3QkO1NQYXuhWLBT',
+        name: 'blocks_00057.tar'
+    },
+    {
+        id: '1dKAjUR6cz-CAyTruZXHXtPPjSImOLnSi',
+        name: 'blocks_00058.tar'
+    },
+    {
+        id: '1dYzacj7jzCgVOgiwxqJIvXIdNyFJldqU',
+        name: 'blocks_00059.tar'
+    },
+    {
+        id: '1Ph76rQ0O1008jXZet554T7x9qoEQ1AVK',
+        name: 'blocks_00060.tar'
+    },
+    {
+        id: '1T2dMKXFvLSIKpO6TLRAtCBnZBuNc_das',
+        name: 'blocks_00061.tar'
+    },
+    {
+        id: '1pWxlBV-1zEZsh4fpOFor2QNLsrFGsH2C',
+        name: 'blocks_00062.tar'
+    },
+    {
+        id: '1hqOn_sXMDbkyYt86--ks6xQnk_BugQPF',
+        name: 'blocks_00063.tar'
+    },
+    {
+        id: '1uuLmdKOC64y-dugfVA0rRJinpVnva3D-',
+        name: 'blocks_00064.tar'
+    },
+    {
+        id: '1M-3llAXWLC920xabhLfOBM5kbq0kje8y',
+        name: 'blocks_00065.tar'
+    },
+    {
+        id: '1nQJguzhY9yBcdS4Zt_qyBQjIGDhrObdF',
+        name: 'blocks_00066.tar'
+    },
+    {
+        id: '1zDXt1ozv_FTof76N-wahoWX0Wd7SO-Qo',
+        name: 'blocks_00067.tar'
+    },
+    {
+        id: '1Xoq-xLZKMWPvsAT3JisjJTiOghIKoNzP',
+        name: 'blocks_00068.tar'
+    },
+    {
+        id: '1e2GNx5z_I0yCzNApG9Ft6V2NhIb8Dw5F',
+        name: 'blocks_index_0.tar'
+    },
+    {
+        id: '1iQImu_09enrp00X9RiuG90RmpqY13x-q',
+        name: 'blocks_index_1.tar'
+    },
+    {
+        id: '1Cj3pN-w3i9sB7KeRCHjH-M2cNIsbQ_8-',
+        name: 'blocks_index_10.tar'
+    },
+    {
+        id: '11pxWPJimIPw404UiOOD_BPR9-7kLJPog',
+        name: 'blocks_index_11.tar'
+    },
+    {
+        id: '1EaeZokRctNIdkDmsuQ4W_FIUCgnyQZlQ',
+        name: 'blocks_index_12.tar'
+    },
+    {
+        id: '1YRBxQAI8i5B65r8KkPTzoGwahA2uNm43',
+        name: 'blocks_index_13.tar'
+    },
+    {
+        id: '1LIM2rq8cA6FpeyniMg_NM5gBi1KdUTvt',
+        name: 'blocks_index_14.tar'
+    },
+    {
+        id: '18pXwEeW0L14aYIiJNwdk_t1tz1zFyQBJ',
+        name: 'blocks_index_15.tar'
+    },
+    {
+        id: '1ngj2BKmqEV7ije6dRKnwQ-3NUmbXWOEz',
+        name: 'blocks_index_16.tar'
+    },
+    {
+        id: '1Vo5CYplAi7hHZyzZ31qRmnnD-_KbWDvA',
+        name: 'blocks_index_17.tar'
+    },
+    {
+        id: '1fAREwsDSFu4iiCKjCRzNEb5_QAiaH3Zv',
+        name: 'blocks_index_18.tar'
+    },
+    {
+        id: '1kO9ilE4NC_S2cvuBuvS3dNLK433_novu',
+        name: 'blocks_index_19.tar'
+    },
+    {
+        id: '1F-e1_3jsyKrRNkpHKvCGyyJZFf1tspTa',
+        name: 'blocks_index_2.tar'
+    },
+    {
+        id: '12Dgmt_2l1wZgmpWVadjxI_mAKzsUMoO6',
+        name: 'blocks_index_20.tar'
+    },
+    {
+        id: '12bYyUQXIIrZaKPzS6WzWCAM82_YlF7u9',
+        name: 'blocks_index_21.tar'
+    },
+    {
+        id: '1gM8KMUQ8we45fdcIa6GdKTQqZUYt6Kkr',
+        name: 'blocks_index_22.tar'
+    },
+    {
+        id: '1UlNPJE94HF5T0FTYOqXaX4UnIEhZolIS',
+        name: 'blocks_index_23.tar'
+    },
+    {
+        id: '1A_vyUTi7RC7y5iAxwhNOb-7omrVGPUQp',
+        name: 'blocks_index_24.tar'
+    },
+    {
+        id: '1_QFUD2nchlcc6hoTg3kwpHJs_HeknCKT',
+        name: 'blocks_index_25.tar'
+    },
+    {
+        id: '1DN6fkx-QcoTTKJTnGwkihttQkcyQaHX2',
+        name: 'blocks_index_26.tar'
+    },
+    {
+        id: '16FaHt1oIRD9ZhGnTiX_fdI_R_hADwI-A',
+        name: 'blocks_index_27.tar'
+    },
+    {
+        id: '1zXM66ObfV1Gj8KxDy99xwgKwYqBwTNkj',
+        name: 'blocks_index_28.tar'
+    },
+    {
+        id: '1l8E-eQTOajHHupK2t0fV7noHXxvdWXfC',
+        name: 'blocks_index_29.tar'
+    },
+    {
+        id: '1JSk0YLRAdC-Xed4azyuuZVmrykVZ6eXI',
+        name: 'blocks_index_3.tar'
+    },
+    {
+        id: '1zlNv8aE8XE73jL4tEFGObvrfOY4d0O9J',
+        name: 'blocks_index_30.tar'
+    },
+    {
+        id: '1laMpHdLHrArevVbdVzh4mv1Ah4XTYLua',
+        name: 'blocks_index_31.tar'
+    },
+    {
+        id: '1tT80iaehUsyrYh1YuWt5INLiPcRdo10B',
+        name: 'blocks_index_32.tar'
+    },
+    {
+        id: '1dNkM728wDo-atWqNWu5u7ee_nYf1FgUH',
+        name: 'blocks_index_33.tar'
+    },
+    {
+        id: '14x68DRRajE_MZsPgSZU03plHq1m2TUcT',
+        name: 'blocks_index_34.tar'
+    },
+    {
+        id: '1FeLrq2_m7z3UmzVJV6K5hJiohPHajIfV',
+        name: 'blocks_index_35.tar'
+    },
+    {
+        id: '1V42h72PMwNBmu-IA_rNELSq6OGxY7on-',
+        name: 'blocks_index_36.tar'
+    },
+    {
+        id: '15XDsjSXomfTZzaUAwmTRLi9sjglIu5Ti',
+        name: 'blocks_index_37.tar'
+    },
+    {
+        id: '1s2XtACrFbh7VbZdppWgzHWmttM0lKLu2',
+        name: 'blocks_index_38.tar'
+    },
+    {
+        id: '1-nOb1i0nXeS_NKtWWMhhw0B6NxWY6nn3',
+        name: 'blocks_index_39.tar'
+    },
+    {
+        id: '1X5Wbhv_t011JXWjiwOoBk0cRa8i-Of7C',
+        name: 'blocks_index_4.tar'
+    },
+    {
+        id: '1gGLXMuOhaVePqEqUV62LmhuizQvAjIRY',
+        name: 'blocks_index_40.tar'
+    },
+    {
+        id: '15qOLeMHgki5oQe33YPNxl4GY8qmcT3Qr',
+        name: 'blocks_index_41.tar'
+    },
+    {
+        id: '1NTmivCI0_dpsRJjqkrkK40WbbOLSCFx3',
+        name: 'blocks_index_42.tar'
+    },
+    {
+        id: '1gIveLZlRlU7mHqRfz1ZRuOkL95uUEOCQ',
+        name: 'blocks_index_43.tar'
+    },
+    {
+        id: '1hxv7lECynerMP3hGiY2kHUJ46NpFyeRL',
+        name: 'blocks_index_44.tar'
+    },
+    {
+        id: '16dnkuXHwJRRjmssgrry_E4zozqBvQwch',
+        name: 'blocks_index_45.tar'
+    },
+    {
+        id: '17LKxRLpoelgJTDZKBNKR76s3DQThLUXl',
+        name: 'blocks_index_46.tar'
+    },
+    {
+        id: '1sZHpHHYnMNWq7TwBXaPTxJBiGTC1jz8p',
+        name: 'blocks_index_47.tar'
+    },
+    {
+        id: '1w_MFztboZ8UPcgP7nIgkJme7jZkUKHLg',
+        name: 'blocks_index_48.tar'
+    },
+    {
+        id: '15vxXOgMG0nDlGEu3kj8LGFUKFU1AhVYl',
+        name: 'blocks_index_49.tar'
+    },
+    {
+        id: '1-NcziHZ95c9YwhxnPoslt_diVxGZHeJB',
+        name: 'blocks_index_5.tar'
+    },
+    {
+        id: '1OSNnz-BqEeMBfY8jTzsxK7L8fYlCJy32',
+        name: 'blocks_index_50.tar'
+    },
+    {
+        id: '1KH1b-GPW29RFefdGHe0IqzVjbg-44tXf',
+        name: 'blocks_index_51.tar'
+    },
+    {
+        id: '1wiqgyxEOQ4ShTdfWWfPJuXX_hpH32sTi',
+        name: 'blocks_index_52.tar'
+    },
+    {
+        id: '1p5NFPyL6Fr9K850xM-XoUwW6iQZAluy3',
+        name: 'blocks_index_6.tar'
+    },
+    {
+        id: '1jCgHWMddl6gaJS-8aD746iXqqkvuzwK_',
+        name: 'blocks_index_7.tar'
+    },
+    {
+        id: '1UBYnZKxv8gPskleT5NvQshqFxNGUb-2k',
+        name: 'blocks_index_8.tar'
+    },
+    {
+        id: '1hFV3tKpj1UWntgEXFO341HuVtla-cWe4',
+        name: 'blocks_index_9.tar'
+    },
+    {
+        id: '16QchMoIvvvEigmVruePHRg7BLqeFYGGl',
+        name: 'blocks_index_misc.tar'
+    },
+    {
+        id: '1ld1nhX4jSQR4ZAB-F-WmOhMwanG9Ze1t',
+        name: 'chainstate_0.tar'
+    },
+    {
+        id: '1OYTnTZpQLWE84Naeo5hiAx8dG5aP_kkS',
+        name: 'chainstate_1.tar'
+    },
+    {
+        id: '1wX_a9cZ7g-zJpQrSYGx1I3qy0B03cKIS',
+        name: 'chainstate_10.tar'
+    },
+    {
+        id: '11HT-IaEUC7wMaQlLlNZUWZDxWHV0wIKc',
+        name: 'chainstate_11.tar'
+    },
+    {
+        id: '1bgHbzsfgtLD1tWC5XbiXvO40Qga3HhwG',
+        name: 'chainstate_12.tar'
+    },
+    {
+        id: '1SLXqu4SBE5QKkwYs9wX6LIbAHbYQ9-IT',
+        name: 'chainstate_13.tar'
+    },
+    {
+        id: '1qnS0VNfsoCueBJbqQ0qLCSHhfZLb9sdb',
+        name: 'chainstate_14.tar'
+    },
+    {
+        id: '1uJDy2DPt7n_dIkzzM0wcN3AhAFosQCDd',
+        name: 'chainstate_15.tar'
+    },
+    {
+        id: '1PlucyeYOtJn2K2h8d0IoYyGNbVEW2f42',
+        name: 'chainstate_16.tar'
+    },
+    {
+        id: '1HvqiiqvngcNPc0EQHH4GN3V4rj1k1hFS',
+        name: 'chainstate_17.tar'
+    },
+    {
+        id: '1Nt2JI7eUgPWG20tdPK9pIci0VODKfN-q',
+        name: 'chainstate_18.tar'
+    },
+    {
+        id: '1hVFQrSWKgqlJ_VPBrdLAUAtqzURpxfjX',
+        name: 'chainstate_19.tar'
+    },
+    {
+        id: '1398yksXOHpusmY7TTa4pZW2FZj-6OJMD',
+        name: 'chainstate_2.tar'
+    },
+    {
+        id: '1pSQpmgZXe7ymkscC6jxRRvLZH9SUcgMP',
+        name: 'chainstate_20.tar'
+    },
+    {
+        id: '1mtXdjrfsGlRRqbrnMqiKJ-hzcfsVREAS',
+        name: 'chainstate_21.tar'
+    },
+    {
+        id: '1ynnZGpZNhKqr-PZ62Rrp6vzUaornDM9u',
+        name: 'chainstate_22.tar'
+    },
+    {
+        id: '1VO7LRTRe5g2xlbVWalgRXU5wm1iwVAHy',
+        name: 'chainstate_23.tar'
+    },
+    {
+        id: '1AT0uknNw20Ey9yV9MbNMPNa6GjV8FWHs',
+        name: 'chainstate_24.tar'
+    },
+    {
+        id: '1IumBK8iZDofU9Wx0wHw92kZiC2ZcyT1O',
+        name: 'chainstate_25.tar'
+    },
+    {
+        id: '1Ci-hoEXmvgJi7fYk_Zc6GmYp4PIDIO4B',
+        name: 'chainstate_26.tar'
+    },
+    {
+        id: '1sDhmLQPOOjAbW18LblL781EzvBoeUWTY',
+        name: 'chainstate_27.tar'
+    },
+    {
+        id: '1HdhF6Dvo7TCMTW6n0A5aCYxObILb_Gvq',
+        name: 'chainstate_28.tar'
+    },
+    {
+        id: '1QxZkzAHb-ms7zqIdjY5MkMPfATmIbit_',
+        name: 'chainstate_29.tar'
+    },
+    {
+        id: '1IcFTVSGyCYe8jeBJffyk6Z01By3SpMT4',
+        name: 'chainstate_3.tar'
+    },
+    {
+        id: '1WnGunenl6lmUlibvhaax1TvxutSZ2tW8',
+        name: 'chainstate_30.tar'
+    },
+    {
+        id: '18pkd_jHioC5iWtbaqyk1KH_tG2d5p0e9',
+        name: 'chainstate_4.tar'
+    },
+    {
+        id: '1bTJ4EfUfryLD46uleTNiadmNgmQWGiX5',
+        name: 'chainstate_5.tar'
+    },
+    {
+        id: '1qZcd4C45_LT7AgDUbn9GxugaBGix_Fbt',
+        name: 'chainstate_6.tar'
+    },
+    {
+        id: '1KBdfwX8owOLZIKtaS5bNQ8EAVlpbc-xf',
+        name: 'chainstate_7.tar'
+    },
+    {
+        id: '1sA_dfIn8Bli1GJI3qEyG-N4Dzk6pXYCX',
+        name: 'chainstate_8.tar'
+    },
+    {
+        id: '1adPuz212zIwHAp8KdFL9cGO4YvGnWkYM',
+        name: 'chainstate_9.tar'
+    },
+    {
+        id: '1rbe62VondpdztdVzegDPRUh_KSUzJ6h-',
+        name: 'chainstate_misc.tar'
+    }
+]
