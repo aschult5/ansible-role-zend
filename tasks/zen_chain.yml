@@ -41,7 +41,11 @@
       dest: "{{ zennode_zen_dir }}/chainstate"
       owner: "{{zennode_user_name }}"
       state: link
-  when: zen_chain_seed.stat.isdir and zen_chain_dest.stat.isdir
+  when: >
+    zen_chain_seed is not skipped and
+    zen_chain_dest is not skipped and
+    zen_chain_seed.stat.isdir and
+    zen_chain_dest.stat.isdir
 
 - name: Check for existing blocks
   stat:
