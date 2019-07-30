@@ -1,4 +1,7 @@
-externalip={{ zennode_ip }}
+externalip={{ zennode_ipv4 }}
+{% if zennode_ipv6 is defined %}
+externalip={{ zennode_ipv6 }}
+{% endif %}
 port=9033
 rpcuser=5lqx1Vt69WsA9H2fcseupsrEVHqxOKUq
 rpcpassword=Usah7utaWJ40YuHMXio9zBmoSa2Nx8QhwyaItnLGGZY1jDiR6v2i5jd6u1ew4bd8
