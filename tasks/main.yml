@@ -11,6 +11,7 @@
 
 # Setup necessary swap
 - import_tasks: swap.yml
+  when: swap_size is defined
 
 # Group and user creation
 - name: Create groups
