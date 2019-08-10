@@ -6,7 +6,7 @@
       - zennode_zen_dir is defined
       - zennode_wallet_dir is defined
       - zennode_skip_blockchain is defined
-      - zennode_ip is defined
+      - zennode_ipv4 is defined
     msg: Required variable missing.
 
 # Zen directory setup
