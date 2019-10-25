@@ -7,19 +7,21 @@
       - zennode_zend_svc_name is defined
     msg: Required variable missing.
 
-- name: Stop zend service before making changes
-  service:
-    name: "{{ zennode_zend_svc_name }}.service"
-    state: stopped
-  ignore_errors: yes
 
 # Setup directory
 - import_tasks: zen_dir.yml
   when: zennode_skip_zendir == false
 
-# Install zen
+# Install dependencies
+- name: apt update
+  apt:
+    update_cache: yes
 - name: Install apt-transport-https
   apt: name=apt-transport-https
+- name: Install wget
+  apt: name=wget
+
+# Install zen
 - name: Zen package repo key
   block:
     - name: zen repo key (sks-keyservers)
@@ -38,27 +40,30 @@
   apt:
     name: zen
     state: latest
+  register: apt_zen
 
-- name: Install wget
-  apt: name=wget
-- name: zen-fetch-params block
+- name: Check for zen-fetch-params effect
+  stat:
+    path: "{{ zennode_user_home }}/.zcash-params"
+  register: zcash_params
+
+- name: zen update block
   block:
     - name: zen-fetch-params
       command: zen-fetch-params
-      args:
-        creates: "{{ zennode_user_home }}/.zcash-params"
       register: result
       until: result is success
       retries: 5
       delay: 10
-  rescue:
-    - name: Cleanup zen-fetch-params
-      file:
-        path: "{{ zennode_user_home }}/.zcash-params"
-        state: absent
-  become: yes
-  become_user: "{{ zennode_user_name }}"
-  when: zennode_skip_blockchain == false
+      become: yes
+      become_user: "{{ zennode_user_name }}"
+
+    - name: Stop zend
+      service:
+        name: "{{ zennode_zend_svc_name }}.service"
+        state: stopped
+      ignore_errors: yes
+  when: apt_zen.changed or not zcash_params.stat.exists
 
 - name: Zend Service
   block:
@@ -94,4 +99,12 @@
         enabled: yes
         state: started
       register: zend_service
+
+    # Restart zentracker
+    - name: Restart tracker service
+      service:
+        name: "{{ secnode_tracker_svc_name }}.service"
+        state: restarted
+      when: zend_service.changed
+      ignore_errors: yes
   when: zennode_skip_services == false
