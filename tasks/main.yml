@@ -40,4 +40,4 @@
 
 - import_tasks: tasks/network.yml
   when: zennode_skip_network == false
-- import_tasks: zend.yml
+- import_tasks: zend-main.yaml

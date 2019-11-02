@@ -1,0 +1,44 @@
+---
+- name: Zend Service
+  block:
+    - name: Create zend service file
+      copy:
+        dest: "/lib/systemd/system/{{ zennode_zend_svc_name }}.service"
+        owner: root
+        content: |
+          [Unit]
+          Description=ZenCash daemon
+
+          [Service]
+          User={{ zennode_user_name }}
+          Type=forking
+          ExecStart=/usr/bin/zend -daemon -pid={{ zennode_zen_dir }}/zend.pid
+          PIDFile={{ zennode_zen_dir }}/zend.pid
+          Restart=always
+          RestartSec=10
+
+          [Install]
+          WantedBy=multi-user.target
+      register: zend_svc_file
+
+    - name: Systemd daemon-reload
+      systemd:
+        daemon_reload: true
+      when: zend_svc_file.changed
+
+    # Activate zend
+    - name: Start and enable zend service
+      service:
+        name: "{{ zennode_zend_svc_name }}.service"
+        enabled: yes
+        state: started
+      register: zend_service
+
+    # Restart zentracker
+    - name: Restart tracker service
+      service:
+        name: "{{ secnode_tracker_svc_name }}.service"
+        state: restarted
+      when: zend_service.changed
+      ignore_errors: yes
+  when: zennode_skip_services is not defined or zennode_skip_services == false

@@ -1,0 +1,31 @@
+---
+- name: Check required zen_chain variables
+  assert:
+    that:
+      - ansible_env is defined
+      - zennode_zen_chain is defined
+    msg: Required variable missing..
+
+- name: Install unzip
+  apt: name=unzip
+- name: Install gdrive
+  unarchive:
+    remote_src: yes
+    src: https://github.com/prasmussen/gdrive/files/879060/gdrive-linux-x64.zip
+    dest: /usr/local/bin/
+    creates: /usr/local/bin/gdrive
+    mode: 0755
+
+- name: Install gdrive authentication file
+  copy:
+    remote_src: no
+    src: files/securenode-208818-c36a8a34b2fc.json
+    dest: "{{ ansible_env.HOME }}/.gdrive/"
+    mode: 0600
+  register: gdrive_svc_file_copy
+- set_fact: gdrive_svc_acct="{{ gdrive_svc_file_copy.dest | basename }}"
+
+- include_tasks: zend-chain-shard.yaml
+  loop: "{{ zennode_zen_chain }}"
+  loop_control:
+    loop_var: zen_chain_shard

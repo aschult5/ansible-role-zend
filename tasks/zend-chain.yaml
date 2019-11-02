@@ -1,0 +1,14 @@
+---
+- name: Check for existing blocks
+  stat:
+    path: "{{ zennode_zen_dir }}/blocks"
+  register: blocks
+
+- name: Bootstrap blockchain
+  block:
+    # First try copying the blockchain from a locally available source
+    - import_tasks: zend-chain-copy.yaml
+  rescue:
+    # Copy failed, try download
+    - import_tasks: zend-chain-download.yaml
+  when: not blocks.stat.exists
