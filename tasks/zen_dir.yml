@@ -11,10 +11,18 @@
 
 # Zen directory setup
 - name: Create zen directory
-  file:
-    path: "{{ zennode_zen_dir }}"
-    state: directory
-    owner: "{{ zennode_user_name }}"
+  block:
+    - file:
+        path: "{{ zennode_zen_dir }}"
+        state: link
+        src: "{{ zennode_zen_dir_link }}"
+        owner: "{{ zennode_user_name }}"
+  rescue:
+    - file:
+        path: "{{ zennode_zen_dir }}"
+        state: directory
+        owner: "{{ zennode_user_name }}"
+
 - name: Create wallet directory
   file:
     path: "{{ zennode_wallet_dir }}"
