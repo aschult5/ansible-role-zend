@@ -6,7 +6,6 @@
       - zennode_user_groups is defined
       - zennode_user_home is defined
       - zennode_user_name is defined
-      - zennode_skip_network is defined
     msg: Missing required variables
 
 # Setup necessary swap
@@ -39,5 +38,5 @@
     - tar
 
 - import_tasks: network.yaml
-  when: zennode_skip_network == false
+  when: zennode_skip_network is not defined or zennode_skip_network == false
 - import_tasks: zend-main.yaml
