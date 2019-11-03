@@ -43,4 +43,13 @@
       file:
         path: "{{ swap_file }}"
         state: absent
+  always:
+    - name: Check for swap file
+      stat:
+        path: "{{ swap_file }}"
+      register: swap_file_check
+    - assert:
+        that:
+          - swap_file_check.stat.exists
+
   when: swapfile_create.changed
