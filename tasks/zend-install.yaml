@@ -1,53 +1,31 @@
 ---
-# Install dependencies
-- name: apt update
-  apt:
-    update_cache: yes
-- name: Install apt-transport-https
-  apt: name=apt-transport-https
-- name: Install wget
-  apt: name=wget
+- name: Check required variables
+  assert:
+    that:
+      - zennode_zen_dir is defined
+    msg: Required variable missing.
 
-# Install zen
-- name: Zen package repo key
-  block:
-    - name: zen repo key (sks-keyservers)
-      apt_key:
-        keyserver: ha.pool.sks-keyservers.net
-        id: 219F55740BBF7A1CE368BA45FB7053CE4991B669
-  rescue:
-    - name: zen repo key (ubuntu)
-      apt_key:
-        keyserver: keyserver.ubuntu.com
-        id: 219F55740BBF7A1CE368BA45FB7053CE4991B669
-- name: Setup zencash repository
-  apt_repository:
-    repo: "deb https://zencashofficial.github.io/repo/ {{ ansible_lsb.codename }} main"
-- name: Install zen to latest
-  apt:
-    name: zen
-    state: latest
-  register: apt_zen
-
-- name: Check for zen-fetch-params effect
-  stat:
-    path: "{{ zennode_user_home }}/.zcash-params"
-  register: zcash_params
-
-- name: zen update block
-  block:
-    - name: zen-fetch-params
-      command: zen-fetch-params
-      register: result
-      until: result is success
-      retries: 5
-      delay: 10
-      become: yes
-      become_user: "{{ zennode_user_name }}"
-
-    - name: Stop zend
-      service:
-        name: "{{ zennode_zend_svc_name }}.service"
-        state: stopped
-      ignore_errors: yes
-  when: apt_zen.changed or not zcash_params.stat.exists
+- name: zend docker container
+  docker_container:
+    name: zend
+    image: "zencash/zen-node:{{ zennode_zen_ver|default('latest') }}"
+    state: started
+    restart_policy: always
+    mounts:
+      - name: zen-dir
+        type: bind
+        source: "{{ zennode_zen_dir }}"
+        target: /mnt/zen
+        read_only: no
+      - name: zcash-params
+        type: volume
+        source: zcash-params
+        target: /mnt/zcash-params
+    env:
+        LOCAL_USER_ID: "{{ zennode_user_id|default(omit) }}"
+        RPC_ALLOWIP_PRESET: LOCALHOST
+        EXTERNAL_IP: "{{ [zennode_ipv4, zennode_ipv6]|reject('undefined')|join(',')|default(omit) }}"
+        TLS_KEY_PATH: "{{ zennode_tls_key|default(omit) }}"
+        TLS_CERT_PATH: "{{ zennode_tls_cert|default(omit) }}"
+    published_ports:
+      - 9033:9033
