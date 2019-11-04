@@ -1,15 +1,5 @@
 ---
-- name: Check required zend variables
-  assert:
-    that:
-      - zennode_user_home is defined
-      - zennode_user_name is defined
-      - zennode_zen_dir is defined
-      - zennode_zend_svc_name is defined
-    msg: Required variable missing.
-
-
-# Setup directory
+- import_tasks: zend-user.yaml
 - import_tasks: zend-dir.yaml
   when: zennode_skip_zendir == false
 - import_tasks: zend-install.yaml

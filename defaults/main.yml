@@ -1,5 +1,6 @@
 ---
 zennode_user_name: "zenops"
+zennode_user_id: 1001
 zennode_user_home: "/home/{{ zennode_user_name }}"
 zennode_user_groups: [ 'adm', 'systemd-journal', 'sudo', 'ssl-cert' ]
 zennode_zen_dir: "{{ zennode_user_home }}/.zen"
