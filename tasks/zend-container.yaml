@@ -11,6 +11,10 @@
     image: "zencash/zen-node:{{ zennode_zen_ver|default('latest') }}"
     state: started
     restart_policy: always
+    stop_timeout: 600  # seconds
+    tmpfs:
+      - /tmp
+      - /run
     mounts:
       - name: zen-dir
         type: bind
@@ -23,9 +27,13 @@
         target: /mnt/zcash-params
     env:
         LOCAL_USER_ID: "{{ zennode_user_id|default(omit) }}"
-        RPC_ALLOWIP_PRESET: LOCALHOST
+        RPC_ALLOWIP_PRESET: SUBNET
+        RPC_ALLOWIP: "{{ zennode_rpc_ipv4|default(omit) }}"
         EXTERNAL_IP: "{{ [zennode_ipv4, zennode_ipv6]|reject('undefined')|join(',')|default(omit) }}"
         TLS_KEY_PATH: "{{ zennode_tls_key|default(omit) }}"
         TLS_CERT_PATH: "{{ zennode_tls_cert|default(omit) }}"
+      networks:
+        - name: ZenNet
+          ipv4_address: "{{ zennode_rpc_ipv4|default(omit) }}"
     published_ports:
       - 9033:9033
