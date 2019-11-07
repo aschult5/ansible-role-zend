@@ -39,12 +39,4 @@
         enabled: yes
         state: started
       register: zend_service
-
-    # Restart zentracker
-    - name: Restart tracker service
-      service:
-        name: "{{ secnode_tracker_svc_name }}.service"
-        state: restarted
-      when: zend_service.changed
-      ignore_errors: yes
   when: zennode_skip_services == false
