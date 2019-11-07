@@ -11,18 +11,5 @@
       remote_src: yes
       # Note src trailing slash indicates to copy directory's contents
       src: "{{ zen_chain_seed_path }}/"
-      dest: "{{ zen_chain_dest_path }}/"
-
-- name: Link blockchain blocks
-  file:
-    src: "{{ zen_chain_dest_path }}/blocks"
-    dest: "{{ zennode_zen_dir }}/blocks"
-    owner: "{{zennode_user_name }}"
-    state: link
-
-- name: Link blockchain chainstate
-  file:
-    src: "{{ zen_chain_dest_path }}/chainstate"
-    dest: "{{ zennode_zen_dir }}/chainstate"
-    owner: "{{zennode_user_name }}"
-    state: link
+      dest: "{{ zennode_zen_dir }}/"
+      owner: "{{ zennode_user_name }}"
