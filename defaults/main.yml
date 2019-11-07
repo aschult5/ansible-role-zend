@@ -1,4 +1,5 @@
 ---
+zennode_zen_ver: v2.0.19
 zennode_user_name: "zenops"
 zennode_user_id: 1001
 zennode_user_home: "/home/{{ zennode_user_name }}"
@@ -13,6 +14,10 @@ zennode_skip_network: false
 zennode_skip_zendir: false
 swap_file: /swapfile
 swappiness: 10
+container_net_name: ZenNet
+container_net_subnet: 172.42.0.0/24
+container_net_gateway: 172.42.0.254
+zennode_rpc_ipv4: 172.42.0.1
 zennode_zen_chain: [
     {
         id: '1Jx3M344It8fz27t88y5FgFiakQcOSJ0K',
