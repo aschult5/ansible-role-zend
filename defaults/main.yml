@@ -1,7 +1,8 @@
 ---
 zennode_user_name: "zenops"
 zennode_user_home: "/home/{{ zennode_user_name }}"
-zennode_zen_dir: "{{ zennode_user_home }}/.zen/"
+zennode_user_groups: [ 'adm', 'systemd-journal', 'sudo', 'ssl-cert' ]
+zennode_zen_dir: "{{ zennode_user_home }}/.zen"
 zennode_zen_conf: "{{ zennode_zen_dir }}/zen.conf"
 zennode_zend_svc_name: "zend"
 zennode_wallet_dir: "{{ zennode_zen_dir }}/wallets"

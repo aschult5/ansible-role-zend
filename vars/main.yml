@@ -1,1 +1,0 @@
-zennode_user_groups: [ 'adm', 'systemd-journal', 'sudo', 'ssl-cert' ]
