@@ -3,7 +3,6 @@
   assert:
     that:
       - zennode_user_name is defined
-      - zennode_zen_conf is defined
       - zennode_zen_dir is defined
       - zennode_wallet_dir is defined
       - zennode_ipv4 is defined
@@ -28,13 +27,6 @@
     path: "{{ zennode_wallet_dir }}"
     state: directory
     owner: "{{ zennode_user_name }}"
-
-- name: Zen configuration file
-  template:
-    src: zen_conf.j2
-    dest: "{{ zennode_zen_conf }}"
-    owner: "{{ zennode_user_name }}"
-    mode: 0644
 
 - import_tasks: zend-chain.yaml
   when: zennode_skip_blockchain is not defined or zennode_skip_blockchain == false

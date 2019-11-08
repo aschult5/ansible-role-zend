@@ -33,6 +33,7 @@
         EXTERNAL_IP: "{{ [zennode_ipv4, zennode_ipv6]|reject('undefined')|join(',')|default(omit) }}"
         TLS_KEY_PATH: "{{ secnode_tls_key|default(omit) }}"
         TLS_CERT_PATH: "{{ secnode_tls_cert|default(omit) }}"
+        OPTS: "-rpcworkqueue=512 -server=1 -listen=1 -txindex=1 -logtimestamps=1"
     networks:
       - name: "{{ container_net_name }}"
         ipv4_address: "{{ zennode_rpc_ipv4|default(omit) }}"
