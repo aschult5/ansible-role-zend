@@ -3,8 +3,15 @@
   assert:
     that:
       - zennode_zen_dir is defined
+      - zennode_zend_svc_name is defined
       - container_net_name is defined
     msg: Required variable missing.
+
+- name: Stop zend service
+  service:
+    name: "{{ zennode_zend_svc_name }}.service"
+    state: stopped
+  ignore_errors: yes
 
 - name: zen docker network
   docker_network:
@@ -46,3 +53,32 @@
     tls_volume: "{{ [tls_srcdir, tls_dstdir, 'ro']|join(':') if tls_srcdir|d() else none }}"
     tls_cert: "{{ tls_dstdir ~ '/cert.pem' if tls_volume else omit }}"
     tls_key: "{{ tls_dstdir ~ '/privkey.pem' if tls_volume else omit }}"
+
+- name: Create zend service file
+  copy:
+    dest: "/lib/systemd/system/{{ zennode_zend_svc_name }}.service"
+    owner: root
+    content: |
+      [Unit]
+      Description=ZenCash daemon
+
+      [Service]
+      Type=oneshot
+      RemainAfterExit=yes
+      ExecStart=/usr/bin/docker start {{ zennode_zend_svc_name }}
+      ExecStop=/usr/bin/docker stop {{ zennode_zend_svc_name }}
+
+      [Install]
+      WantedBy=multi-user.target
+  register: zend_svc_file
+
+- name: Systemd daemon-reload
+  systemd:
+    daemon_reload: true
+  when: zend_svc_file.changed
+
+- name: Start and enable zend service
+  service:
+    name: "{{ zennode_zend_svc_name }}.service"
+    enabled: yes
+    state: started

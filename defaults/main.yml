@@ -9,7 +9,6 @@ zennode_zen_conf: "{{ zennode_zen_dir }}/zen.conf"
 zennode_zend_svc_name: "zend"
 zennode_wallet_dir: "{{ zennode_zen_dir }}/wallets"
 zennode_skip_blockchain: false
-zennode_skip_services: false
 zennode_skip_network: false
 zennode_skip_zendir: false
 swap_file: /swapfile
