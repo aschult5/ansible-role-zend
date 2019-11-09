@@ -1,0 +1,8 @@
+---
+- import_tasks: swap.yml
+  when: swap_size is defined
+- import_tasks: network.yml
+  when: zennode_skip_network == false
+- import_tasks: certificate.yml
+  when: certified
+- import_tasks: zend-main.yml

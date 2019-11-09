@@ -7,8 +7,8 @@
 - name: Bootstrap blockchain
   block:
     # First try copying the blockchain from a locally available source
-    - import_tasks: zend-chain-copy.yaml
+    - import_tasks: zend-chain-copy.yml
   rescue:
     # Copy failed, try download
-    - import_tasks: zend-chain-download.yaml
+    - import_tasks: zend-chain-download.yml
   when: not blocks.stat.exists

@@ -28,7 +28,7 @@
     state: directory
     owner: "{{ zennode_user_name }}"
 
-- import_tasks: zend-chain.yaml
+- import_tasks: zend-chain.yml
   when: zennode_skip_blockchain is not defined or zennode_skip_blockchain == false
 
 - name: Set zen directory owner

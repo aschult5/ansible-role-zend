@@ -25,7 +25,7 @@
   register: gdrive_svc_file_copy
 - set_fact: gdrive_svc_acct="{{ gdrive_svc_file_copy.dest | basename }}"
 
-- include_tasks: zend-chain-shard.yaml
+- include_tasks: zend-chain-shard.yml
   loop: "{{ zennode_zen_chain }}"
   loop_control:
     loop_var: zen_chain_shard

@@ -1,5 +1,0 @@
----
-- import_tasks: zend-user.yaml
-- import_tasks: zend-dir.yaml
-  when: zennode_skip_zendir == false
-- import_tasks: zend-install.yaml
