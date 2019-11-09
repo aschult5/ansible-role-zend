@@ -19,6 +19,8 @@
     ipam_config:
       - subnet: "{{ container_net_subnet }}"
         gateway: "{{ container_net_gateway }}"
+  vars:
+    ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
 
 - name: zend docker container
   docker_container:
@@ -49,6 +51,7 @@
     published_ports:
       - 9033:9033
   vars:
+    ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
     tls_dstdir: /mnt/cert
     tls_volume: "{{ [tls_srcdir, tls_dstdir, 'ro']|join(':') if tls_srcdir|d() else none }}"
     tls_cert: "{{ tls_dstdir ~ '/cert.pem' if tls_volume else omit }}"

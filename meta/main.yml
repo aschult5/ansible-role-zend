@@ -1,7 +1,3 @@
 ---
 dependencies:
   - role: nickjj.docker
-    vars:
-      docker__edition: ce
-      docker__channel: ["stable"]
-      docker__version: 18.06
