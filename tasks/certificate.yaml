@@ -1,0 +1,130 @@
+---
+# Dependencies
+- name: Install apt-transport-https
+  apt: name=apt-transport-https
+- name: Setup certbot repository
+  apt_repository:
+    repo: ppa:certbot/certbot
+
+- name: Install certificate dependencies
+  apt:
+    name: "{{ item }}"
+  loop:
+    - ca-certificates
+    - certbot
+    - ssl-cert
+
+- set_fact:
+    letsencrypt_dir: /etc/letsencrypt
+- set_fact:
+    cert_dir: "{{letsencrypt_dir}}/live/{{ inventory_hostname }}"
+
+# Certificate
+- name: Generate Certificate
+  command: "certbot certonly -n --agree-tos --register-unsafely-without-email --standalone -d {{ inventory_hostname }}"
+  args:
+    creates: "{{ cert_dir }}/cert.pem"
+
+- name: Check for tls cert file
+  stat:
+    path: "{{ cert_dir }}/cert.pem"
+  register: tls_cert_file_reg
+- name: Check for tls key file
+  stat:
+    path: "{{ cert_dir }}/privkey.pem"
+  register: tls_key_file_reg
+- name: Verify tls files exist
+  assert:
+    that: "{{item}}.stat.exists"
+  with_items:
+    - tls_cert_file_reg
+    - tls_key_file_reg
+- name: Set TLS cert and key file facts
+  set_fact:
+    tls_cert_file: "{{ tls_cert_file_reg.stat.lnk_source | d(tls_cert_file_reg.stat.path) }}"
+    tls_key_file: "{{ tls_key_file_reg.stat.lnk_source | d(tls_key_file_reg.stat.path) }}"
+
+- name: Set letsencrypt directory attributes
+  file:
+    path: "{{ letsencrypt_dir }}"
+    state: directory
+    owner: root
+    group: ssl-cert
+    mode: 0750
+    recurse: yes
+
+- name: ssl-cert group id
+  getent:
+    database: group
+    key: ssl-cert
+- set_fact:
+    zennode_group_id: "{{ getent_group['ssl-cert'][1]|d(omit) }}"
+
+- name: Create /usr/local/share/ca-certificates directory
+  file:
+    state: directory
+    path: /usr/local/share/ca-certificates
+- name: Copy certificate
+  copy:
+    remote_src: yes
+    src: "{{ tls_cert_file }}"
+    dest: /usr/local/share/ca-certificates/chain.crt
+  when: tls_cert_file_reg.stat.exists
+  register: cert_copy
+
+# Update certificates on CA change
+- block:
+    - name: update-ca-certificates
+      shell: "update-ca-certificates"
+      register: update_ca_certificates
+    - name: update_ca_certificates stdout
+      debug:
+        msg: "{{ update_ca_certificates.stdout }}"
+  when: cert_copy.changed
+
+# Services to renew certificate
+- name: Create update service file
+  copy:
+    dest: /lib/systemd/system/{{ cert_update_svc }}.service
+    owner: root
+    content: |
+      [Unit]
+      Description={{ cert_update_svc }}.service
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/certbot -q renew --deploy-hook {{ cert_renew_deploy_hook }}
+      PrivateTmp=true
+  register: update_svc_file
+- name: Create update timer file
+  copy:
+    dest: /lib/systemd/system/{{ cert_update_svc }}.timer
+    owner: root
+    content: |
+      [Unit]
+      Description=Run update unit daily @ 06:00:00 (UTC)
+
+      [Timer]
+      OnCalendar=*-*-* 06:00:00
+      Unit={{ cert_update_svc }}.service
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+  register: update_timer_file
+
+- name: Systemd daemon-reload
+  systemd:
+    daemon_reload: true
+  when: update_svc_file.changed or update_timer_file.changed
+
+- name: Disable certbot timer
+  service:
+    name: certbot.timer
+    enabled: no
+    state: stopped
+- name: Start and enable update timer
+  service:
+    name: "{{ cert_update_svc }}.timer"
+    enabled: yes
+    state: started

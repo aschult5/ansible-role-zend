@@ -11,6 +11,9 @@ zennode_wallet_dir: "{{ zennode_zen_dir }}/wallets"
 zennode_skip_blockchain: false
 zennode_skip_network: false
 zennode_skip_zendir: false
+certified: false
+cert_update_svc: zenupdate
+cert_renew_deploy_hook: '"systemctl restart {{ zennode_zend_svc_name }}"'
 swap_file: /swapfile
 swappiness: 10
 container_net_name: ZenNet

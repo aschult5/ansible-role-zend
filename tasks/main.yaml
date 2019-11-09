@@ -2,5 +2,7 @@
 - import_tasks: swap.yaml
   when: swap_size is defined
 - import_tasks: network.yaml
-  when: zennode_skip_network is not defined or zennode_skip_network == false
+  when: zennode_skip_network == false
+- import_tasks: certificate.yaml
+  when: certified
 - import_tasks: zend-main.yaml

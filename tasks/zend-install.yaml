@@ -38,12 +38,15 @@
       - zcash-params:/mnt/zcash-params
       - "{{ tls_volume|d(omit, true) }}"
     env:
-        LOCAL_USER_ID: "{{ zennode_user_id|d(omit) }}"
-        RPC_ALLOWIP_PRESET: LOCALHOST
+        LOCAL_USER_ID: "{{ zennode_user_id|d(omit,true) }}"
+        LOCAL_GRP_ID: "{{ zennode_group_id|d(omit,true) }}"
+        RPC_ALLOWIP_PRESET: ANY
         RPC_ALLOWIP: "{{ zennode_rpc_ipv4|d(omit) }}"
+        RPC_PORT: "8231"
         EXTERNAL_IP: "{{ [zennode_ipv4, zennode_ipv6]|reject('undefined')|join(',')|d(omit, true) }}"
-        TLS_CERT_PATH: "{{ tls_cert }}"
-        TLS_KEY_PATH: "{{ tls_key }}"
+        PORT: "9033"
+        TLS_CERT_PATH: "{{ tls_cert_mnt | d(omit,true) }}"
+        TLS_KEY_PATH: "{{ tls_key_mnt | d(omit,true) }}"
         OPTS: "-rpcworkqueue=512 -server=1 -listen=1 -txindex=1 -logtimestamps=1"
     networks:
       - name: "{{ container_net_name }}"
@@ -52,10 +55,11 @@
       - 9033:9033
   vars:
     ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
-    tls_dstdir: /mnt/cert
-    tls_volume: "{{ [tls_srcdir, tls_dstdir, 'ro']|join(':') if tls_srcdir|d() else none }}"
-    tls_cert: "{{ tls_dstdir ~ '/cert.pem' if tls_volume else omit }}"
-    tls_key: "{{ tls_dstdir ~ '/privkey.pem' if tls_volume else omit }}"
+    tls_mntdir: /mnt/cert
+    tls_srcdir: "{{ tls_cert_file|dirname if tls_cert_file|d('',true) and tls_key_file|d('',true) else none }}"
+    tls_volume: "{{ [tls_srcdir, tls_mntdir, 'ro'] | join(':') if tls_srcdir|d('',true) else none }}"
+    tls_cert_mnt: "{{ [tls_mntdir, tls_cert_file|basename] | join('/') if tls_volume else none }}"
+    tls_key_mnt: "{{ [tls_mntdir, tls_key_file|basename] | join('/') if tls_volume else none }}"
 
 - name: Create zend service file
   copy:
