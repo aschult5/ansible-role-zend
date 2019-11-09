@@ -16,7 +16,7 @@
 - name: zend docker container
   docker_container:
     name: zend
-    image: "zencash/zen-node:{{ zennode_zen_ver|default('latest') }}"
+    image: "zencash/zen-node:{{ zennode_zen_ver|d('latest') }}"
     state: present
     restart_policy: unless-stopped
     log_driver: journald
@@ -27,15 +27,22 @@
     volumes:
       - "{{ zennode_zen_dir }}:/mnt/zen"
       - zcash-params:/mnt/zcash-params
+      - "{{ tls_volume|d(omit, true) }}"
     env:
-        LOCAL_USER_ID: "{{ zennode_user_id|default(omit) }}"
-        RPC_ALLOWIP: "{{ zennode_rpc_ipv4|default(omit) }}"
-        EXTERNAL_IP: "{{ [zennode_ipv4, zennode_ipv6]|reject('undefined')|join(',')|default(omit) }}"
-        TLS_KEY_PATH: "{{ secnode_tls_key|default(omit) }}"
-        TLS_CERT_PATH: "{{ secnode_tls_cert|default(omit) }}"
+        LOCAL_USER_ID: "{{ zennode_user_id|d(omit) }}"
+        RPC_ALLOWIP_PRESET: LOCALHOST
+        RPC_ALLOWIP: "{{ zennode_rpc_ipv4|d(omit) }}"
+        EXTERNAL_IP: "{{ [zennode_ipv4, zennode_ipv6]|reject('undefined')|join(',')|d(omit, true) }}"
+        TLS_CERT_PATH: "{{ tls_cert }}"
+        TLS_KEY_PATH: "{{ tls_key }}"
         OPTS: "-rpcworkqueue=512 -server=1 -listen=1 -txindex=1 -logtimestamps=1"
     networks:
       - name: "{{ container_net_name }}"
-        ipv4_address: "{{ zennode_rpc_ipv4|default(omit) }}"
+        ipv4_address: "{{ zennode_rpc_ipv4|d(omit) }}"
     published_ports:
       - 9033:9033
+  vars:
+    tls_dstdir: /mnt/cert
+    tls_volume: "{{ [tls_srcdir, tls_dstdir, 'ro']|join(':') if tls_srcdir|d() else none }}"
+    tls_cert: "{{ tls_dstdir ~ '/cert.pem' if tls_volume else omit }}"
+    tls_key: "{{ tls_dstdir ~ '/privkey.pem' if tls_volume else omit }}"
