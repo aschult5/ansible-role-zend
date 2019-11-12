@@ -1,8 +1,6 @@
 - name: Check required zen_chain_shard variables
   assert:
     that:
-      - zennode_user_name is defined
-      - zennode_zen_dir is defined
       - zen_chain_shard is defined
       - gdrive_svc_acct is defined
     msg: Required variable missing.

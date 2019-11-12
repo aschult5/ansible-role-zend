@@ -1,11 +1,4 @@
 ---
-- name: Check required zen_chain variables
-  assert:
-    that:
-      - ansible_env is defined
-      - zennode_zen_chain is defined
-    msg: Required variable missing..
-
 - name: Install unzip
   apt: name=unzip
 - name: Install gdrive

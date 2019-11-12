@@ -1,11 +1,4 @@
 ---
-- name: Check required zen_chain variables
-  assert:
-    that:
-      - zennode_user_name is defined
-      - zennode_zen_dir is defined
-    msg: Required variable missing.
-
 - name: Copy blockchain
   copy:
       remote_src: yes

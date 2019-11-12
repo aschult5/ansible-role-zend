@@ -1,13 +1,4 @@
 ---
-- name: Check required variables
-  assert:
-    that:
-      - zennode_user_name is defined
-      - zennode_zen_dir is defined
-      - zennode_wallet_dir is defined
-      - zennode_ipv4 is defined
-    msg: Required variable missing.
-
 # Zen directory setup
 - name: Create zen directory
   block:
@@ -24,7 +15,7 @@
 
 - name: Create wallet directory
   file:
-    path: "{{ zennode_wallet_dir }}"
+    path: "{{ zennode_zen_dir }}/wallets"
     state: directory
     owner: "{{ zennode_user_name }}"
 

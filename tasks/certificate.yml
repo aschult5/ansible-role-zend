@@ -85,11 +85,11 @@
 # Services to renew certificate
 - name: Create update service file
   copy:
-    dest: /lib/systemd/system/{{ cert_update_svc }}.service
+    dest: /lib/systemd/system/{{ cert_update_svc_name }}.service
     owner: root
     content: |
       [Unit]
-      Description={{ cert_update_svc }}.service
+      Description={{ cert_update_svc_name }}.service
 
       [Service]
       Type=oneshot
@@ -98,7 +98,7 @@
   register: update_svc_file
 - name: Create update timer file
   copy:
-    dest: /lib/systemd/system/{{ cert_update_svc }}.timer
+    dest: /lib/systemd/system/{{ cert_update_svc_name }}.timer
     owner: root
     content: |
       [Unit]
@@ -106,7 +106,7 @@
 
       [Timer]
       OnCalendar=*-*-* 06:00:00
-      Unit={{ cert_update_svc }}.service
+      Unit={{ cert_update_svc_name }}.service
       Persistent=true
 
       [Install]
@@ -125,6 +125,6 @@
     state: stopped
 - name: Start and enable update timer
   service:
-    name: "{{ cert_update_svc }}.timer"
+    name: "{{ cert_update_svc_name }}.timer"
     enabled: yes
     state: started

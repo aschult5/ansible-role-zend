@@ -1,12 +1,4 @@
 ---
-- name: Check required variables
-  assert:
-    that:
-      - zennode_zen_dir is defined
-      - zennode_zend_svc_name is defined
-      - container_net_name is defined
-    msg: Required variable missing.
-
 - name: Stop zend service
   service:
     name: "{{ zennode_zend_svc_name }}.service"
@@ -41,7 +33,7 @@
         LOCAL_USER_ID: "{{ zennode_user_id|d(omit,true) }}"
         LOCAL_GRP_ID: "{{ zennode_group_id|d(omit,true) }}"
         RPC_ALLOWIP_PRESET: ANY
-        RPC_ALLOWIP: "{{ zennode_rpc_ipv4|d(omit) }}"
+        RPC_ALLOWIP: "{{ container_zend_ipv4|d(omit) }}"
         RPC_PORT: "8231"
         EXTERNAL_IP: "{{ [zennode_ipv4, zennode_ipv6]|reject('undefined')|join(',')|d(omit, true) }}"
         PORT: "9033"
@@ -50,7 +42,7 @@
         OPTS: "-rpcworkqueue=512 -server=1 -listen=1 -txindex=1 -logtimestamps=1"
     networks:
       - name: "{{ container_net_name }}"
-        ipv4_address: "{{ zennode_rpc_ipv4|d(omit) }}"
+        ipv4_address: "{{ container_zend_ipv4|d(omit) }}"
     published_ports:
       - 9033:9033
   vars:

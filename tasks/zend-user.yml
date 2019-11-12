@@ -1,13 +1,4 @@
 ---
-- name: Check required variables
-  assert:
-    that:
-      - zennode_user_groups is defined
-      - zennode_user_name is defined
-      - zennode_user_id is defined
-      - zennode_user_home is defined
-    msg: Required variable missing.
-
 # Group and user creation
 - name: Create groups
   group:
