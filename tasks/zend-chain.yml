@@ -10,7 +10,7 @@
 
 - name: Bootstrap blockchain
   when: >
-    zend_chain_seed_path|d()
+    zend_chain_seed_path is defined
     and not zend_chain_blocks.stat.exists
     and not zend_chain_chainstate.stat.exists
   block:
@@ -20,29 +20,29 @@
         msg: Won't attempt blockchain seed move
 
     - name: Move blockchain blocks
-      command: mv {{ zen_chain_seed_path }}/blocks {{ zend_dir }}
+      command: mv {{ zend_chain_seed_path }}/blocks {{ zend_dir }}
       args:
-        removes: "{{ zen_chain_seed_path }}/blocks"
+        removes: "{{ zend_chain_seed_path }}/blocks"
         creates: "{{ zend_dir }}/blocks"
       register: mv_blocks
 
     - name: Move blockchain chainstate
-      command: mv {{ zen_chain_seed_path }}/chainstate {{ zend_dir }}
+      command: mv {{ zend_chain_seed_path }}/chainstate {{ zend_dir }}
       args:
-        removes: "{{ zen_chain_seed_path }}/chainstate"
+        removes: "{{ zend_chain_seed_path }}/chainstate"
         creates: "{{ zend_dir }}/chainstate"
       register: mv_chainstate
   rescue:
     # Cleanup failed move
     - name: Replace blockchain blocks
-      command: mv {{ zend_dir }}/blocks {{ zen_chain_seed_path }}
+      command: mv {{ zend_dir }}/blocks {{ zend_chain_seed_path }}
       args:
         removes: "{{ zend_dir }}/blocks"
         creates: "{{ zend_chain_seed_path }}/blocks"
       when: mv_blocks.changed|d()
 
     - name: Replace blockchain chainstate
-      command: mv {{ zend_dir }}/chainstate {{ zen_chain_seed_path }}
+      command: mv {{ zend_dir }}/chainstate {{ zend_chain_seed_path }}
       args:
         removes: "{{ zend_dir }}/chainstate"
         creates: "{{ zend_chain_seed_path }}/chainstate"
