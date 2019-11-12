@@ -14,8 +14,6 @@ zennode_skip_zendir: false
 certified: false
 cert_update_svc: zenupdate
 cert_renew_deploy_hook: '"systemctl restart {{ zennode_zend_svc_name }}"'
-swap_file: /swapfile
-swappiness: 10
 container_net_name: ZenNet
 container_net_subnet: 172.42.0.0/24
 container_net_gateway: 172.42.0.254
