@@ -1,10 +1,4 @@
 ---
-- name: Stop zend service
-  service:
-    name: "{{ zennode_zend_svc_name }}.service"
-    state: stopped
-  ignore_errors: yes
-
 - name: zen docker network
   docker_network:
     name: "{{ container_net_name }}"
@@ -69,15 +63,10 @@
 
       [Install]
       WantedBy=multi-user.target
-  register: zend_svc_file
+  notify:
+    - systemd daemon-reload
 
-- name: Systemd daemon-reload
-  systemd:
-    daemon_reload: true
-  when: zend_svc_file.changed
-
-- name: Start and enable zend service
+- name: Enable zend service
   service:
     name: "{{ zennode_zend_svc_name }}.service"
     enabled: yes
-    state: started

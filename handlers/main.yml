@@ -1,0 +1,9 @@
+---
+- name: systemd daemon-reload
+  systemd:
+    daemon_reload: true
+
+- name: restart zend
+  service:
+    name: "{{ zennode_zend_svc_name }}.service"
+    state: restarted

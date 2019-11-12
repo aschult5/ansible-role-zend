@@ -73,7 +73,9 @@
   register: cert_copy
 
 # Update certificates on CA change
-- block:
+- name: ca-certificates
+  when: zend_cert_copy.changed
+  block:
     - name: update-ca-certificates
       shell: "update-ca-certificates"
       register: update_ca_certificates
@@ -95,7 +97,9 @@
       Type=oneshot
       ExecStart=/usr/bin/certbot -q renew --deploy-hook {{ cert_renew_deploy_hook }}
       PrivateTmp=true
-  register: update_svc_file
+  notify:
+    - systemd daemon-reload
+
 - name: Create update timer file
   copy:
     dest: /lib/systemd/system/{{ cert_update_svc_name }}.timer
@@ -111,12 +115,8 @@
 
       [Install]
       WantedBy=timers.target
-  register: update_timer_file
-
-- name: Systemd daemon-reload
-  systemd:
-    daemon_reload: true
-  when: update_svc_file.changed or update_timer_file.changed
+  notify:
+    - systemd daemon-reload
 
 - name: Disable certbot timer
   service:
