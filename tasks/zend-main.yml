@@ -1,4 +1,9 @@
 ---
 - import_tasks: zend-user.yml
 - import_tasks: zend-dir.yml
+- import_tasks: zend-wallet.yml
+  when: zend_wallet_src is defined
+- import_tasks: zend-chain.yml
+  tags:
+    - blockchain
 - import_tasks: zend-install.yml

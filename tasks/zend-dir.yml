@@ -13,16 +13,6 @@
         state: directory
         owner: "{{ zend_user_name }}"
 
-- name: Create wallet directory
-  file:
-    path: "{{ zend_dir }}/wallets"
-    state: directory
-    owner: "{{ zend_user_name }}"
-
-- import_tasks: zend-chain.yml
-  tags:
-    - blockchain
-
 - name: Set zen directory owner
   file:
     path: "{{ zend_dir }}"
