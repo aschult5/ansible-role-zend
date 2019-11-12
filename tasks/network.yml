@@ -1,10 +1,6 @@
 ---
-# Dependencies
-- name: Install network dependencies
-  apt:
-    name: "{{ item }}"
-  loop:
-    - ufw
+- name: Install ufw
+  apt: name=ufw
 
 # Firewall
 - name: ufw allow outgoing
