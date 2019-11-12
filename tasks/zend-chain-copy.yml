@@ -1,8 +1,0 @@
----
-- name: Copy blockchain
-  copy:
-      remote_src: yes
-      # Note src trailing slash indicates to copy directory's contents
-      src: "{{ zend_chain_seed_path }}/"
-      dest: "{{ zend_dir }}/"
-      owner: "{{ zend_user_name }}"
