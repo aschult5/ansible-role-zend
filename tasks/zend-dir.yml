@@ -3,21 +3,21 @@
 - name: Create zen directory
   block:
     - file:
-        path: "{{ zennode_zen_dir }}"
+        path: "{{ zend_dir }}"
         state: link
-        src: "{{ zennode_zen_dir_link }}"
-        owner: "{{ zennode_user_name }}"
+        src: "{{ zend_dir_link }}"
+        owner: "{{ zend_user_name }}"
   rescue:
     - file:
-        path: "{{ zennode_zen_dir }}"
+        path: "{{ zend_dir }}"
         state: directory
-        owner: "{{ zennode_user_name }}"
+        owner: "{{ zend_user_name }}"
 
 - name: Create wallet directory
   file:
-    path: "{{ zennode_zen_dir }}/wallets"
+    path: "{{ zend_dir }}/wallets"
     state: directory
-    owner: "{{ zennode_user_name }}"
+    owner: "{{ zend_user_name }}"
 
 - import_tasks: zend-chain.yml
   tags:
@@ -25,7 +25,7 @@
 
 - name: Set zen directory owner
   file:
-    path: "{{ zennode_zen_dir }}"
+    path: "{{ zend_dir }}"
     state: directory
-    owner: "{{ zennode_user_name }}"
+    owner: "{{ zend_user_name }}"
     recurse: yes

@@ -5,5 +5,5 @@
 
 - name: restart zend
   service:
-    name: "{{ zennode_zend_svc_name }}.service"
+    name: "{{ zend_svc_name }}.service"
     state: restarted

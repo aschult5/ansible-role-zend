@@ -3,13 +3,13 @@
 - name: Create groups
   group:
     name: "{{ item }}"
-  loop: "{{ zennode_user_groups }}"
+  loop: "{{ zend_user_groups }}"
 
 - name: Create user
   user:
-    name: "{{ zennode_user_name }}"
-    uid: "{{ zennode_user_id }}"
-    comment: "{{ zennode_user_name }}"
+    name: "{{ zend_user_name }}"
+    uid: "{{ zend_user_id }}"
+    comment: "{{ zend_user_name }}"
     shell: /bin/bash
-    groups: "{{ zennode_user_groups | join(',') }}"
-    home: "{{ zennode_user_home }}"
+    groups: "{{ zend_user_groups | join(',') }}"
+    home: "{{ zend_user_home }}"

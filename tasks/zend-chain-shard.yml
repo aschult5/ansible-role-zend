@@ -1,15 +1,15 @@
-- name: Check required zen_chain_shard variables
+- name: Check required zend_chain_shard variables
   assert:
     that:
-      - zen_chain_shard is defined
+      - zend_chain_shard is defined
       - gdrive_svc_acct is defined
     msg: Required variable missing.
 
 - name: Download blockchain
-  command: "gdrive download --service-account {{ gdrive_svc_acct }} {{ zen_chain_shard.id }}"
+  command: "gdrive download --service-account {{ gdrive_svc_acct }} {{ zend_chain_shard.id }}"
   args:
     chdir: /tmp
-    creates: "/tmp/{{ zen_chain_shard.name }}"
+    creates: "/tmp/{{ zend_chain_shard.name }}"
   register: result
   until: result is success
   retries: 5
@@ -18,12 +18,12 @@
 - name: Extract blockchain
   unarchive:
     remote_src: yes
-    src: "/tmp/{{ zen_chain_shard.name }}"
-    dest: "{{ zennode_zen_dir }}"
-    owner: "{{ zennode_user_name }}"
+    src: "/tmp/{{ zend_chain_shard.name }}"
+    dest: "{{ zend_dir }}"
+    owner: "{{ zend_user_name }}"
 
 # Delete archive to save space
 - name: Delete blockchain archive
   file:
-    path: "/tmp/{{ zen_chain_shard.name }}"
+    path: "/tmp/{{ zend_chain_shard.name }}"
     state: absent

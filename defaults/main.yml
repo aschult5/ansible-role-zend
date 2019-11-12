@@ -1,18 +1,17 @@
 ---
-zennode_zen_ver: v2.0.19
-zennode_user_name: "zenops"
-zennode_user_id: 1001
-zennode_user_home: "/home/{{ zennode_user_name }}"
-zennode_user_groups: [ 'adm', 'systemd-journal', 'sudo', 'ssl-cert' ]
-zennode_zen_dir: "{{ zennode_user_home }}/.zen"
-zennode_zend_svc_name: "zend"
-cert_update_svc_name: zenupdate
-cert_renew_deploy_hook: '"systemctl restart {{ zennode_zend_svc_name }}"'
-container_net_name: ZenNet
-container_net_subnet: 172.42.0.0/24
-container_net_gateway: 172.42.0.254
-container_zend_ipv4: 172.42.0.1
-zennode_zen_chain: [
+zend_ver: v2.0.19
+zend_user_name: zenops
+zend_user_id: 1001
+zend_user_home: /home/{{ zend_user_name }}
+zend_user_groups: [ 'adm', 'systemd-journal', 'sudo', 'ssl-cert' ]
+zend_dir: "{{ zend_user_home }}/.zen"
+zend_svc_name: zend
+zend_cert_update_svc_name: zenupdate
+zend_docker_net_name: ZenNet
+zend_docker_net_subnet: 172.42.0.0/24
+zend_docker_net_gateway: 172.42.0.254
+zend_docker_ipv4: 172.42.0.1
+zend_chain: [
     {
         id: '1Jx3M344It8fz27t88y5FgFiakQcOSJ0K',
         name: 'blocks_00000.tar'

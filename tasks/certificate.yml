@@ -17,21 +17,21 @@
 - set_fact:
     letsencrypt_dir: /etc/letsencrypt
 - set_fact:
-    cert_dir: "{{letsencrypt_dir}}/live/{{ inventory_hostname }}"
+    zend_cert_dir: "{{letsencrypt_dir}}/live/{{ inventory_hostname }}"
 
 # Certificate
 - name: Generate Certificate
   command: "certbot certonly -n --agree-tos --register-unsafely-without-email --standalone -d {{ inventory_hostname }}"
   args:
-    creates: "{{ cert_dir }}/cert.pem"
+    creates: "{{ zend_cert_dir }}/cert.pem"
 
 - name: Check for tls cert file
   stat:
-    path: "{{ cert_dir }}/cert.pem"
+    path: "{{ zend_cert_dir }}/cert.pem"
   register: tls_cert_file_reg
 - name: Check for tls key file
   stat:
-    path: "{{ cert_dir }}/privkey.pem"
+    path: "{{ zend_cert_dir }}/privkey.pem"
   register: tls_key_file_reg
 - name: Verify tls files exist
   assert:
@@ -58,7 +58,7 @@
     database: group
     key: ssl-cert
 - set_fact:
-    zennode_group_id: "{{ getent_group['ssl-cert'][1]|d(omit) }}"
+    zend_group_id: "{{ getent_group['ssl-cert'][1]|d(omit) }}"
 
 - name: Create /usr/local/share/ca-certificates directory
   file:
@@ -70,7 +70,7 @@
     src: "{{ tls_cert_file }}"
     dest: /usr/local/share/ca-certificates/chain.crt
   when: tls_cert_file_reg.stat.exists
-  register: cert_copy
+  register: zend_cert_copy
 
 # Update certificates on CA change
 - name: ca-certificates
@@ -82,27 +82,27 @@
     - name: update_ca_certificates stdout
       debug:
         msg: "{{ update_ca_certificates.stdout }}"
-  when: cert_copy.changed
+  when: zend_cert_copy.changed
 
 # Services to renew certificate
 - name: Create update service file
   copy:
-    dest: /lib/systemd/system/{{ cert_update_svc_name }}.service
+    dest: /lib/systemd/system/{{ zend_cert_update_svc_name }}.service
     owner: root
     content: |
       [Unit]
-      Description={{ cert_update_svc_name }}.service
+      Description={{ zend_cert_update_svc_name }}.service
 
       [Service]
       Type=oneshot
-      ExecStart=/usr/bin/certbot -q renew --deploy-hook {{ cert_renew_deploy_hook }}
+      ExecStart=/usr/bin/certbot -q renew --deploy-hook "systemctl restart {{ zend_svc_name }}"
       PrivateTmp=true
   notify:
     - systemd daemon-reload
 
 - name: Create update timer file
   copy:
-    dest: /lib/systemd/system/{{ cert_update_svc_name }}.timer
+    dest: /lib/systemd/system/{{ zend_cert_update_svc_name }}.timer
     owner: root
     content: |
       [Unit]
@@ -110,7 +110,7 @@
 
       [Timer]
       OnCalendar=*-*-* 06:00:00
-      Unit={{ cert_update_svc_name }}.service
+      Unit={{ zend_cert_update_svc_name }}.service
       Persistent=true
 
       [Install]
@@ -125,6 +125,6 @@
     state: stopped
 - name: Start and enable update timer
   service:
-    name: "{{ cert_update_svc_name }}.timer"
+    name: "{{ zend_cert_update_svc_name }}.timer"
     enabled: yes
     state: started

@@ -1,17 +1,17 @@
 ---
 - name: zen docker network
   docker_network:
-    name: "{{ container_net_name }}"
+    name: "{{ zend_docker_net_name }}"
     ipam_config:
-      - subnet: "{{ container_net_subnet }}"
-        gateway: "{{ container_net_gateway }}"
+      - subnet: "{{ zend_docker_net_subnet }}"
+        gateway: "{{ zend_docker_net_gateway }}"
   vars:
     ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
 
 - name: zend docker container
   docker_container:
     name: zend
-    image: "zencash/zen-node:{{ zennode_zen_ver|d('latest') }}"
+    image: "zencash/zen-node:{{ zend_ver|d('latest') }}"
     state: present
     restart_policy: unless-stopped
     log_driver: journald
@@ -20,23 +20,23 @@
       - /tmp
       - /run
     volumes:
-      - "{{ zennode_zen_dir }}:/mnt/zen"
+      - "{{ zend_dir }}:/mnt/zen"
       - zcash-params:/mnt/zcash-params
       - "{{ tls_volume|d(omit, true) }}"
     env:
-        LOCAL_USER_ID: "{{ zennode_user_id|d(omit,true) }}"
-        LOCAL_GRP_ID: "{{ zennode_group_id|d(omit,true) }}"
+        LOCAL_USER_ID: "{{ zend_user_id|d(omit,true) }}"
+        LOCAL_GRP_ID: "{{ zend_group_id|d(omit,true) }}"
         RPC_ALLOWIP_PRESET: ANY
-        RPC_ALLOWIP: "{{ container_zend_ipv4|d(omit) }}"
+        RPC_ALLOWIP: "{{ zend_docker_ipv4|d(omit,true) }}"
         RPC_PORT: "8231"
-        EXTERNAL_IP: "{{ [zennode_ipv4, zennode_ipv6]|reject('undefined')|join(',')|d(omit, true) }}"
+        EXTERNAL_IP: "{{ [zend_ipv4, zend_ipv6]|reject('undefined')|join(',')|d(omit, true) }}"
         PORT: "9033"
         TLS_CERT_PATH: "{{ tls_cert_mnt | d(omit,true) }}"
         TLS_KEY_PATH: "{{ tls_key_mnt | d(omit,true) }}"
         OPTS: "-rpcworkqueue=512 -server=1 -listen=1 -txindex=1 -logtimestamps=1"
     networks:
-      - name: "{{ container_net_name }}"
-        ipv4_address: "{{ container_zend_ipv4|d(omit) }}"
+      - name: "{{ zend_docker_net_name }}"
+        ipv4_address: "{{ zend_docker_ipv4|d(omit,true) }}"
     published_ports:
       - 9033:9033
   vars:
@@ -49,7 +49,7 @@
 
 - name: Create zend service file
   copy:
-    dest: "/lib/systemd/system/{{ zennode_zend_svc_name }}.service"
+    dest: "/lib/systemd/system/{{ zend_svc_name }}.service"
     owner: root
     content: |
       [Unit]
@@ -58,8 +58,8 @@
       [Service]
       Type=oneshot
       RemainAfterExit=yes
-      ExecStart=/usr/bin/docker start {{ zennode_zend_svc_name }}
-      ExecStop=/usr/bin/docker stop {{ zennode_zend_svc_name }}
+      ExecStart=/usr/bin/docker start {{ zend_svc_name }}
+      ExecStop=/usr/bin/docker stop {{ zend_svc_name }}
 
       [Install]
       WantedBy=multi-user.target
@@ -68,5 +68,5 @@
 
 - name: Enable zend service
   service:
-    name: "{{ zennode_zend_svc_name }}.service"
+    name: "{{ zend_svc_name }}.service"
     enabled: yes
