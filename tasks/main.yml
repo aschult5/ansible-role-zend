@@ -1,6 +1,8 @@
 ---
 - import_tasks: network.yml
-  when: zennode_skip_network == false
+  tags:
+    - network
 - import_tasks: certificate.yml
-  when: certified
+  tags:
+    - certificate
 - import_tasks: zend-main.yml

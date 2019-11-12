@@ -29,7 +29,8 @@
     owner: "{{ zennode_user_name }}"
 
 - import_tasks: zend-chain.yml
-  when: zennode_skip_blockchain is not defined or zennode_skip_blockchain == false
+  tags:
+    - blockchain
 
 - name: Set zen directory owner
   file:
