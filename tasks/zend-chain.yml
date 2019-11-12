@@ -10,27 +10,25 @@
 
 - name: Bootstrap blockchain
   block:
-    # First try installing the blockchain from a locally available source
     - import_tasks: zend-chain-move.yml
-      when: zend_chain_seed_move|d()
-    - import_tasks: zend-chain-copy.yml
-      when: not zend_chain_seed_move|d()
   rescue:
-    # Resort to download
-    - import_tasks: zend-chain-download.yml
+    - import_tasks: zend-chain-copy.yml
   always:
-    - name: Set perms on blockchain blocks
+    - name: Blockchain blocks directory
       file:
         path: "{{ zend_dir }}/blocks"
         state: directory
         recurse: true
         owner: "{{ zend_user_name }}"
         mode: "u+rw"
-    - name: Set perms on blockchain chainstate
+    - name: Blockchain chainstate directory
       file:
         path: "{{ zend_dir }}/chainstate"
         state: directory
         recurse: true
         owner: "{{ zend_user_name }}"
         mode: "u+rw"
-  when: not zend_chain_blocks.stat.exists and not zend_chain_chainstate.stat.exists
+  when: >
+    zend_chain_seed_path|d()
+    and not zend_chain_blocks.stat.exists
+    and not zend_chain_chainstate.stat.exists
