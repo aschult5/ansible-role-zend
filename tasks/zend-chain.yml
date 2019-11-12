@@ -9,6 +9,10 @@
   register: zend_chain_chainstate
 
 - name: Bootstrap blockchain
+  when: >
+    zend_chain_seed_path|d()
+    and not zend_chain_blocks.stat.exists
+    and not zend_chain_chainstate.stat.exists
   block:
     - import_tasks: zend-chain-move.yml
   rescue:
@@ -28,7 +32,3 @@
         recurse: true
         owner: "{{ zend_user_name }}"
         mode: "u+rw"
-  when: >
-    zend_chain_seed_path|d()
-    and not zend_chain_blocks.stat.exists
-    and not zend_chain_chainstate.stat.exists

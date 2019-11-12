@@ -82,7 +82,6 @@
     - name: update_ca_certificates stdout
       debug:
         msg: "{{ update_ca_certificates.stdout }}"
-  when: zend_cert_copy.changed
 
 # Services to renew certificate
 - name: Create update service file
