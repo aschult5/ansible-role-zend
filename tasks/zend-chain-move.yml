@@ -1,0 +1,29 @@
+---
+- name: Move blockchain
+  block:
+    - name: Move blockchain blocks
+      command: mv {{ zen_chain_seed_path }}/blocks {{ zend_dir }}
+      args:
+        removes: "{{ zen_chain_seed_path }}/blocks"
+        creates: "{{ zend_dir }}/blocks"
+    - name: Move blockchain chainstate
+      command: mv {{ zen_chain_seed_path }}/chainstate {{ zend_dir }}
+      args:
+        removes: "{{ zen_chain_seed_path }}/chainstate"
+        creates: "{{ zend_dir }}/chainstate"
+  rescue:
+    - name: Replace blockchain blocks
+      command: mv {{ zend_dir }}/blocks {{ zen_chain_seed_path }}
+      args:
+        removes: "{{ zend_dir }}/blocks"
+        creates: "{{ zend_chain_seed_path }}/blocks"
+      ignore_errors: true
+    - name: Replace blockchain chainstate
+      command: mv {{ zend_dir }}/chainstate {{ zen_chain_seed_path }}
+      args:
+        removes: "{{ zend_dir }}/chainstate"
+        creates: "{{ zend_chain_seed_path }}/chainstate"
+      ignore_errors: true
+
+    # If move failed, try copy
+    - include_tasks: zend-chain-copy.yml
