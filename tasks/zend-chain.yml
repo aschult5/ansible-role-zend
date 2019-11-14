@@ -15,7 +15,8 @@
     and not zend_chain_chainstate.stat.exists
   block:
     # Try to move
-    - assert:
+    - name: Check for zend_chain_seed_move
+      assert:
         that: zend_chain_seed_move|d()
         msg: Won't attempt blockchain seed move
 

@@ -19,9 +19,12 @@
     enabled: no
     state: stopped
 
-- set_fact:
+- name: set fact letsencrypt_dir
+  set_fact:
     letsencrypt_dir: /etc/letsencrypt
-- set_fact:
+
+- name: set fact zend_cert_dir
+  set_fact:
     zend_cert_dir: "{{letsencrypt_dir}}/live/{{ inventory_hostname }}"
 
 # Certificate
