@@ -6,3 +6,19 @@ dependencies:
       swap_swappiness: 10
     tags:
       - swap
+
+galaxy_info:
+  role_name: zend
+  author: aschult5
+  description: Horizen's zend
+  license: MIT
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+        - xenial
+
+  galaxy_tags: []
