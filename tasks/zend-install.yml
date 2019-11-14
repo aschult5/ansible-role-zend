@@ -1,4 +1,9 @@
 ---
+- name: sudo group id
+  getent:
+    database: group
+    key: sudo
+
 - name: zen docker network
   docker_network:
     name: "{{ zend_docker_net_name }}"
@@ -25,7 +30,7 @@
       - "{{ tls_volume|d(omit, true) }}"
     env:
         LOCAL_USER_ID: "{{ zend_user_id|d(omit,true) }}"
-        LOCAL_GRP_ID: "{{ zend_group_id|d(omit,true) }}"
+        LOCAL_GRP_ID: "{{ getent_group['sudo'][1]|d(omit,true) }}"
         RPC_ALLOWIP_PRESET: ANY
         RPC_ALLOWIP: "{{ zend_docker_ipv4|d(omit,true) }}"
         RPC_PORT: "8231"

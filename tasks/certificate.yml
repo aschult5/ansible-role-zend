@@ -12,7 +12,6 @@
   loop:
     - ca-certificates
     - certbot
-    - ssl-cert
 
 - set_fact:
     letsencrypt_dir: /etc/letsencrypt
@@ -49,16 +48,9 @@
     path: "{{ letsencrypt_dir }}"
     state: directory
     owner: root
-    group: ssl-cert
+    group: sudo
     mode: 0750
     recurse: yes
-
-- name: ssl-cert group id
-  getent:
-    database: group
-    key: ssl-cert
-- set_fact:
-    zend_group_id: "{{ getent_group['ssl-cert'][1]|d(omit) }}"
 
 - name: Create /usr/local/share/ca-certificates directory
   file:

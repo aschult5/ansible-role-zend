@@ -3,7 +3,7 @@ zend_ver: v2.0.19
 zend_user_name: zenops
 zend_user_id: 1001
 zend_user_home: /home/{{ zend_user_name }}
-zend_user_groups: [ 'adm', 'systemd-journal', 'sudo', 'ssl-cert' ]
+zend_user_groups: [ 'adm', 'systemd-journal', 'sudo' ]
 zend_dir: "{{ zend_user_home }}/.zen"
 zend_svc_name: zend
 zend_cert_update_svc_name: zenupdate
