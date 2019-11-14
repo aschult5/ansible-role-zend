@@ -13,6 +13,12 @@
     - ca-certificates
     - certbot
 
+- name: Stop and disable apache2
+  service:
+    name: apache2
+    enabled: no
+    state: stopped
+
 - set_fact:
     letsencrypt_dir: /etc/letsencrypt
 - set_fact:
