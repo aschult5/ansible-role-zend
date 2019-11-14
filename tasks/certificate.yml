@@ -78,7 +78,7 @@
   when: zend_cert_copy.changed
   block:
     - name: update-ca-certificates
-      shell: "update-ca-certificates"
+      command: "update-ca-certificates"
       register: update_ca_certificates
     - name: update_ca_certificates stdout
       debug:
