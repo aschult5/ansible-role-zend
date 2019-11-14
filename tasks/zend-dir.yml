@@ -1,17 +1,10 @@
 ---
 # Zen directory setup
 - name: Create zen directory
-  block:
-    - file:
-        path: "{{ zend_dir }}"
-        state: link
-        src: "{{ zend_dir_link }}"
-        owner: "{{ zend_user_name }}"
-  rescue:
-    - file:
-        path: "{{ zend_dir }}"
-        state: directory
-        owner: "{{ zend_user_name }}"
+  file:
+    path: "{{ zend_dir }}"
+    state: directory
+    owner: "{{ zend_user_name }}"
 
 - name: Set zen directory owner
   file:
