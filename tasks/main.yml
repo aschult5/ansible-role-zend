@@ -3,7 +3,7 @@
   tags:
     - network
 
-- import_tasks: zend-user.yml
+- import_tasks: user.yml
   tags:
     - always
 
@@ -29,16 +29,16 @@
     backup: yes
   notify: restart zend
 
-- import_tasks: zend-chain.yml
+- import_tasks: blockchain.yml
   tags:
     - blockchain
   notify: restart zend
 
-- import_tasks: zend-container.yml
+- import_tasks: container.yml
   tags:
     - always
   notify: restart zend
 
-- import_tasks: zend-service.yml
+- import_tasks: service.yml
   tags:
     - service
