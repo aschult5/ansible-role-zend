@@ -2,8 +2,5 @@
 - import_tasks: network.yml
   tags:
     - network
-- import_tasks: certificate.yml
-  tags:
-    - certificate
 - import_tasks: zend-main.yml
   notify: restart zend

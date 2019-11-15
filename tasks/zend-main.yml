@@ -1,6 +1,15 @@
 ---
 - import_tasks: zend-user.yml
-- import_tasks: zend-dir.yml
+  tags:
+    - user
+
+- name: Create zend directory
+  file:
+    path: "{{ zend_dir }}"
+    state: directory
+    owner: "{{ zend_user_name }}"
+    mode: "u+rwx"
+
 - import_tasks: zend-wallet.yml
   when: zend_wallet_src is defined
 - import_tasks: zend-chain.yml

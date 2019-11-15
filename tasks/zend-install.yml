@@ -35,7 +35,7 @@
         RPC_ALLOWIP: "{{ zend_docker_ipv4|d(omit,true) }}"
         RPC_PORT: "8231"
         EXTERNAL_IP: "{{ [zend_ipv4, zend_ipv6]|reject('undefined')|join(',')|d(omit, true) }}"
-        PORT: "9033"
+        PORT: "{{ zend_port }}"
         TLS_CERT_PATH: "{{ tls_cert_mnt | d(omit,true) }}"
         TLS_KEY_PATH: "{{ tls_key_mnt | d(omit,true) }}"
         OPTS: "-rpcworkqueue=512 -server=1 -listen=1 -txindex=1 -logtimestamps=1"
@@ -43,7 +43,7 @@
       - name: "{{ zend_docker_net_name }}"
         ipv4_address: "{{ zend_docker_ipv4|d(omit,true) }}"
     published_ports:
-      - 9033:9033
+      - "{{ zend_port }}:{{ zend_port }}"
   vars:
     ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
     tls_mntdir: /mnt/cert

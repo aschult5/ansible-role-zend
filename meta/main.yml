@@ -1,11 +1,6 @@
 ---
 dependencies:
   - role: nickjj.docker
-  - role: geerlingguy.swap
-    vars:
-      swap_swappiness: 10
-    tags:
-      - swap
 
 galaxy_info:
   role_name: zend

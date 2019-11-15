@@ -2,35 +2,18 @@
 - name: Install ufw
   apt: name=ufw
 
-# Firewall
-- name: ufw allow outgoing
-  ufw:
-    policy: allow
-    direction: outgoing
-- name: ufw deny incoming
-  ufw:
-    policy: deny
-    direction: incoming
-- name: ufw limit ssh/tcp
-  ufw:
-    rule: limit
-    port: ssh
-    proto: tcp
-- name: ufw allow http/tcp
-  ufw:
-    rule: allow
-    port: http
-    proto: tcp
 - name: ufw allow https/tcp
   ufw:
     rule: allow
     port: https
     proto: tcp
-- name: ufw allow 9033/tcp
+
+- name: ufw allow zend_port/tcp
   ufw:
     rule: allow
-    port: 9033
+    port: "{{ zend_port }}"
     proto: tcp
+
 - name: ufw enable
   ufw:
     state: enabled

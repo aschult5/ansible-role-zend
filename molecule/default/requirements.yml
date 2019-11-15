@@ -1,4 +1,2 @@
 - src: nickjj.docker
   version: v1.9.1
-- src: geerlingguy.swap
-  version: 1.0.0
