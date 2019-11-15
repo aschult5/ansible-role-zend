@@ -2,5 +2,39 @@
 - import_tasks: network.yml
   tags:
     - network
-- import_tasks: zend-main.yml
+
+- import_tasks: zend-user.yml
+  tags:
+    - always
+
+- name: Create zend directory
+  tags:
+    - always
+  file:
+    path: "{{ zend_dir }}"
+    state: directory
+    owner: "{{ zend_user_name }}"
+    mode: "u+rwx"
+
+- name: Copy source wallet
+  when: zend_wallet_src|d('', true)
+  tags:
+    - wallet
+  copy:
+    remote_src: "{{ zend_wallet_src_remote|d('no') }}"
+    src: "{{ zend_wallet_src }}"
+    dest: "{{ zend_dir }}/wallet.dat"
+    owner: "{{ zend_user_name }}"
+    mode: 0600
+    backup: yes
+  notify: restart zend
+
+- import_tasks: zend-chain.yml
+  tags:
+    - blockchain
+  notify: restart zend
+
+- import_tasks: zend-install.yml
+  tags:
+    - always
   notify: restart zend
