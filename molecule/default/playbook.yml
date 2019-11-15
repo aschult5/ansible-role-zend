@@ -1,7 +1,13 @@
 ---
 - name: Converge
   hosts: all
-  tasks:
-    - name: inventory_hostname
-      debug:
-        var: inventory_hostname
+  pre_tasks:
+    - name: Update apt cache
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - role: zend
+      vars:
+        - docker__default_daemon_json: ""
+        - docker__daemon_flags: ""

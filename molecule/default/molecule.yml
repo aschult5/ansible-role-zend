@@ -6,8 +6,14 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: instance
-    image: centos:7
+  - name: molecule_zend
+    image: geerlingguy/docker-${TARGET_DISTRO:-ubuntu1804}-ansible:latest
+    command: ${DOCKER_COMMAND:-/lib/systemd/systemd}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    privileged: true
+    pre_build_image: true
 provisioner:
   name: ansible
   lint:

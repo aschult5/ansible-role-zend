@@ -11,8 +11,8 @@
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=100
-      ExecStart=/usr/bin/docker start {{ zend_svc_name }}
-      ExecStop=/usr/bin/docker stop {{ zend_svc_name }}
+      ExecStart=/usr/bin/docker start {{ zend_docker_ctr_name }}
+      ExecStop=/usr/bin/docker stop {{ zend_docker_ctr_name }}
 
       [Install]
       WantedBy=multi-user.target

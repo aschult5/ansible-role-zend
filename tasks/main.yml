@@ -32,12 +32,10 @@
 - import_tasks: blockchain.yml
   tags:
     - blockchain
-  notify: restart zend
 
 - import_tasks: container.yml
   tags:
     - always
-  notify: restart zend
 
 - import_tasks: service.yml
   tags:

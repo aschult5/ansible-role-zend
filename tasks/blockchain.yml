@@ -26,6 +26,7 @@
         removes: "{{ zend_chain_seed_path }}/blocks"
         creates: "{{ zend_dir }}/blocks"
       register: mv_blocks
+      notify: restart zend
 
     - name: Move blockchain chainstate
       command: mv {{ zend_chain_seed_path }}/chainstate {{ zend_dir }}
@@ -33,6 +34,7 @@
         removes: "{{ zend_chain_seed_path }}/chainstate"
         creates: "{{ zend_dir }}/chainstate"
       register: mv_chainstate
+      notify: restart zend
   rescue:
     # Cleanup failed move
     - name: Replace blockchain blocks
@@ -57,6 +59,7 @@
           src: "{{ zend_chain_seed_path }}/"
           dest: "{{ zend_dir }}/"
           owner: "{{ zend_user_name }}"
+      notify: restart zend
   always:
     - name: Blockchain blocks directory
       file:

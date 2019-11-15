@@ -7,15 +7,17 @@
 - name: zen docker network
   docker_network:
     name: "{{ zend_docker_net_name }}"
+    appends: yes
     ipam_config:
       - subnet: "{{ zend_docker_net_subnet }}"
         gateway: "{{ zend_docker_net_gateway }}"
   vars:
     ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
+  notify: docker network connect
 
 - name: zend docker container
   docker_container:
-    name: zend
+    name: "{{ zend_docker_ctr_name }}"
     image: "zencash/zen-node:{{ zend_ver|d('latest') }}"
     state: present
     restart_policy: unless-stopped
@@ -24,10 +26,7 @@
     tmpfs:
       - /tmp
       - /run
-    volumes:
-      - "{{ zend_dir }}:/mnt/zen"
-      - zcash-params:/mnt/zcash-params
-      - "{{ tls_volume|d(omit, true) }}"
+    volumes: "{{ [ zend_volume, zcash_volume, tls_volume if tls_volume|d('',true) else none ] | reject('none') | list }}"
     env:
         LOCAL_USER_ID: "{{ zend_user_id|d(omit,true) }}"
         LOCAL_GRP_ID: "{{ getent_group['sudo'][1]|d(omit,true) }}"
@@ -39,15 +38,15 @@
         TLS_CERT_PATH: "{{ tls_cert_mnt | d(omit,true) }}"
         TLS_KEY_PATH: "{{ tls_key_mnt | d(omit,true) }}"
         OPTS: "-rpcworkqueue=512 -server=1 -listen=1 -txindex=1 -logtimestamps=1"
-    networks:
-      - name: "{{ zend_docker_net_name }}"
-        ipv4_address: "{{ zend_docker_ipv4|d(omit,true) }}"
     published_ports:
       - "{{ zend_port }}:{{ zend_port }}"
   vars:
     ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
+    zend_volume: "{{ [zend_dir, '/mnt/zen'] | join(':') }}"
+    zcash_volume: zcash-params:/mnt/zcash-params
     tls_mntdir: /mnt/cert
     tls_srcdir: "{{ tls_cert_file|dirname if tls_cert_file|d('',true) and tls_key_file|d('',true) else none }}"
     tls_volume: "{{ [tls_srcdir, tls_mntdir, 'ro'] | join(':') if tls_srcdir|d('',true) else none }}"
-    tls_cert_mnt: "{{ [tls_mntdir, tls_cert_file|basename] | join('/') if tls_volume else none }}"
-    tls_key_mnt: "{{ [tls_mntdir, tls_key_file|basename] | join('/') if tls_volume else none }}"
+    tls_cert_mnt: "{{ [tls_mntdir, tls_cert_file|basename] | join('/') if tls_volume|d('',true) else none }}"
+    tls_key_mnt: "{{ [tls_mntdir, tls_key_file|basename] | join('/') if tls_volume|d('',true) else none }}"
+  notify: restart zend

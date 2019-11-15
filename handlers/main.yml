@@ -3,6 +3,13 @@
   systemd:
     daemon_reload: true
 
+- name: docker network connect
+  docker_network:
+    name: "{{ zend_docker_net_name }}"
+    connected: "{{ zend_docker_net_connected|d([]) }}"
+  vars:
+    ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
+
 - name: restart zend
   service:
     name: "{{ zend_svc_name }}.service"
