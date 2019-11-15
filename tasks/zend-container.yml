@@ -51,28 +51,3 @@
     tls_volume: "{{ [tls_srcdir, tls_mntdir, 'ro'] | join(':') if tls_srcdir|d('',true) else none }}"
     tls_cert_mnt: "{{ [tls_mntdir, tls_cert_file|basename] | join('/') if tls_volume else none }}"
     tls_key_mnt: "{{ [tls_mntdir, tls_key_file|basename] | join('/') if tls_volume else none }}"
-
-- name: Create zend service file
-  copy:
-    dest: "/lib/systemd/system/{{ zend_svc_name }}.service"
-    owner: root
-    content: |
-      [Unit]
-      Description=ZenCash daemon
-
-      [Service]
-      Type=oneshot
-      RemainAfterExit=yes
-      TimeoutStartSec=100
-      ExecStart=/usr/bin/docker start {{ zend_svc_name }}
-      ExecStop=/usr/bin/docker stop {{ zend_svc_name }}
-
-      [Install]
-      WantedBy=multi-user.target
-  notify:
-    - systemd daemon-reload
-
-- name: Enable zend service
-  service:
-    name: "{{ zend_svc_name }}.service"
-    enabled: yes

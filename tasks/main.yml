@@ -34,7 +34,11 @@
     - blockchain
   notify: restart zend
 
-- import_tasks: zend-install.yml
+- import_tasks: zend-container.yml
   tags:
     - always
   notify: restart zend
+
+- import_tasks: zend-service.yml
+  tags:
+    - service
