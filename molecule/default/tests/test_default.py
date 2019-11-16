@@ -7,9 +7,13 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ).get_hosts('all')
 
 
-def test_hosts_file(host):
-    f = host.file('/etc/hosts')
+def test_zend_is_installed(host):
+    containers = host.docker.get_containers()
+    zend = next((c for c in containers if c.name == 'zend'), None)
+    assert zend
 
-    assert f.exists
-    assert f.user == 'root'
-    assert f.group == 'root'
+
+def test_zend_running(host):
+    zend = host.service('zend')
+    assert zend.is_enabled
+    assert zend.is_running
