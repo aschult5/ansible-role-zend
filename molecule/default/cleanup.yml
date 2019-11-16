@@ -1,0 +1,30 @@
+---
+- name: Cleanup
+  hosts: all
+  ignore_unreachable: true
+  ignore_errors: true
+  gather_facts: false
+
+  pre_tasks:
+    - name: Install docker pip
+      pip: name=docker
+
+  tasks:
+    # test whether the host is reachable before continuing
+    - ping:
+      register: reach
+    - meta: end_host
+      when: reach.ping|d() != "pong"
+
+    - include_vars: ../../defaults/main.yml
+
+    - name: Delete docker_container
+      docker_container:
+        name: "{{ zend_docker_ctr_name }}"
+        state: absent
+
+    - name: Delete docker_network
+      docker_network:
+        name: "{{ zend_docker_net_name }}"
+        state: absent
+        force: yes
