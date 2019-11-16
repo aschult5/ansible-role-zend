@@ -20,7 +20,7 @@
 - name: zend docker container
   docker_container:
     name: "{{ zend_docker_ctr_name }}"
-    image: "zencash/zen-node:{{ zend_ver|d('latest') }}"
+    image: "zencash/zen-node:{{ zend_ver }}"
     state: present
     restart_policy: unless-stopped
     log_driver: journald
