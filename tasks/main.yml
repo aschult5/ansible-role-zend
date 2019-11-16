@@ -1,8 +1,4 @@
 ---
-- import_tasks: network.yml
-  tags:
-    - network
-
 - import_tasks: user.yml
   tags:
     - always
