@@ -34,14 +34,14 @@
         LOCAL_GRP_ID: "{{ getent_group['sudo'][1]|d(omit,true) }}"
         RPC_ALLOWIP_PRESET: ANY
         RPC_ALLOWIP: "{{ zend_docker_ipv4|d(omit,true) }}"
-        RPC_PORT: "8231"
+        RPC_PORT: "{{ zend_port_rpc }}"
         EXTERNAL_IP: "{{ [zend_ipv4, zend_ipv6]|reject('undefined')|join(',')|d(omit, true) }}"
-        PORT: "{{ zend_port }}"
+        PORT: "{{ zend_port_p2p }}"
         TLS_CERT_PATH: "{{ tls_cert_mnt | d(omit,true) }}"
         TLS_KEY_PATH: "{{ tls_key_mnt | d(omit,true) }}"
         OPTS: "-rpcworkqueue=512 -server=1 -listen=1 -txindex=1 -logtimestamps=1"
     published_ports:
-      - "{{ zend_port }}:{{ zend_port }}"
+      - "{{ zend_port_p2p }}:{{ zend_port_p2p }}"
   vars:
     zend_volume: "{{ [zend_dir, '/mnt/zen'] | join(':') }}"
     zcash_volume: zcash-params:/mnt/zcash-params

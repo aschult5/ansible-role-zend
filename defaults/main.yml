@@ -1,7 +1,8 @@
 ---
 zend_ver: v2.0.19
 zend_svc_name: zend
-zend_port: "9033"
+zend_port_p2p: "9033"
+zend_port_rpc: "8231"
 zend_dir: /mnt/horizen
 zend_user_name: zenops
 zend_user_id: 1001
