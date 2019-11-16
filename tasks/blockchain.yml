@@ -14,6 +14,13 @@
     and not zend_chain_blocks.stat.exists
     and not zend_chain_chainstate.stat.exists
   block:
+    - name: Stop zend service before making changes
+      service:
+        name: "{{ zend_svc_name }}.service"
+        state: stopped
+      ignore_errors: true
+      notify: start zend
+
     # Try to move
     - name: Check for zend_chain_seed_move
       assert:

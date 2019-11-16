@@ -1,4 +1,11 @@
 ---
+- name: stop zend
+  service:
+    name: "{{ zend_svc_name }}.service"
+    state: stopped
+  listen: restart zend
+  tags: service
+
 - name: systemd daemon-reload
   systemd:
     daemon_reload: true
@@ -10,7 +17,9 @@
   vars:
     ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
 
-- name: restart zend
+- name: start zend
   service:
     name: "{{ zend_svc_name }}.service"
-    state: restarted
+    state: started
+  listen: restart zend
+  tags: service
