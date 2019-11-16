@@ -1,4 +1,8 @@
 ---
+- name: pip docker
+  pip:
+    name: docker
+
 - name: sudo group id
   getent:
     database: group
@@ -11,8 +15,6 @@
     ipam_config:
       - subnet: "{{ zend_docker_net_subnet }}"
         gateway: "{{ zend_docker_net_gateway }}"
-  vars:
-    ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
   notify: docker network connect
 
 - name: zend docker container
@@ -41,7 +43,6 @@
     published_ports:
       - "{{ zend_port }}:{{ zend_port }}"
   vars:
-    ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
     zend_volume: "{{ [zend_dir, '/mnt/zen'] | join(':') }}"
     zcash_volume: zcash-params:/mnt/zcash-params
     tls_mntdir: /mnt/cert

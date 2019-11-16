@@ -1,6 +1,12 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    docker_install_compose: false
+    docker_service_state: stopped
+    docker_service_enabled: false
+    docker_restart_handler_state: stopped
+
   pre_tasks:
     - name: Update apt cache
       apt: update_cache=true cache_valid_time=600
@@ -8,6 +14,3 @@
 
   roles:
     - role: zend
-      vars:
-        - docker__default_daemon_json: ""
-        - docker__daemon_flags: ""

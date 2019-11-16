@@ -14,8 +14,6 @@
   docker_network:
     name: "{{ zend_docker_net_name }}"
     connected: "{{ zend_docker_net_connected|d([]) }}"
-  vars:
-    ansible_python_interpreter: "{{ '/usr/bin/env python-docker' }}"
 
 - name: start zend
   service:
