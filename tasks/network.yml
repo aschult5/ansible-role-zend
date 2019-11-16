@@ -8,10 +8,10 @@
     port: https
     proto: tcp
 
-- name: ufw allow zend_port/tcp
+- name: ufw allow zend_port_p2p/tcp
   ufw:
     rule: allow
-    port: "{{ zend_port }}"
+    port: "{{ zend_port_p2p }}"
     proto: tcp
 
 - name: ufw enable
