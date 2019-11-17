@@ -12,17 +12,18 @@
     - meta: end_host
       when: reach.ping|d() != "pong"
 
-    - include_vars: ../../defaults/main.yml
-
+    # Note: all required vars must be defined in inventory, e.g. in molecule.yml
     - name: Install docker pip
       pip: name=docker
     - name: Delete docker_container
       docker_container:
         name: "{{ zend_docker_ctr_name }}"
+        docker_host: "{{ zend_docker_host }}"
         state: absent
 
     - name: Delete docker_network
       docker_network:
         name: "{{ zend_docker_net_name }}"
+        docker_host: "{{ zend_docker_host }}"
         state: absent
         force: yes

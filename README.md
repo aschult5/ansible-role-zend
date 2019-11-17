@@ -44,6 +44,7 @@ If there is an existing user you wish to use, modify these variables for that us
 Unless you have good reason to, you shouldn't modify `zend_user_groups_default`.
 Instead, specify additional groups in `zend_user_groups`.
 
+    zend_docker_host: unix:///var/run/docker.sock
     zend_docker_ctr_name: zend
     zend_docker_net_name: ZenNet
     zend_docker_net_subnet: 172.42.0.0/24

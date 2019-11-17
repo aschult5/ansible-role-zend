@@ -11,6 +11,7 @@
 - name: zen docker network
   docker_network:
     name: "{{ zend_docker_net_name }}"
+    docker_host: "{{ zend_docker_host }}"
     appends: yes
     ipam_config:
       - subnet: "{{ zend_docker_net_subnet }}"
@@ -20,6 +21,7 @@
 - name: zend docker container
   docker_container:
     name: "{{ zend_docker_ctr_name }}"
+    docker_host: "{{ zend_docker_host }}"
     image: "zencash/zen-node:{{ zend_ver }}"
     state: present
     restart_policy: unless-stopped

@@ -8,14 +8,22 @@ lint:
 platforms:
   - name: molecule_zend
     image: geerlingguy/docker-${TARGET_DISTRO:-ubuntu1804}-ansible:latest
-    command: ${DOCKER_COMMAND:-/lib/systemd/systemd}
+    override_command: false
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/mnt/docker.sock
+    tmpfs:
+      - /tmp
+      - /run
     privileged: true
     pre_build_image: true
 provisioner:
   name: ansible
+  inventory:
+    hosts:
+      all:
+        vars:
+          zend_docker_host: unix:///mnt/docker.sock
   lint:
     name: ansible-lint
 verifier:

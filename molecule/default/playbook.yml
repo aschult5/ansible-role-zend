@@ -13,5 +13,9 @@
       apt: update_cache=true cache_valid_time=600
       when: ansible_os_family == 'Debian'
 
+    - name: Install systemd-sysv
+      apt: name=systemd-sysv
+      when: ansible_os_family == 'Debian'
+
   roles:
     - role: aschult5.zend
