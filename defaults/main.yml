@@ -15,7 +15,7 @@ zend_docker_ctr_name: zend
 zend_docker_net_name: ZenNet
 zend_docker_net_subnet: 172.42.0.0/24
 zend_docker_net_gateway: 172.42.0.254
-zend_docker_net_connected: [ "{{ zend_docker_ctr_name }}" ]
+zend_docker_net_connected: []
 zend_docker_ipv4: 172.42.0.1
 zend_tls_cert_path: ''
 zend_tls_key_path: ''
