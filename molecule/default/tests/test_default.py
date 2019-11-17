@@ -8,12 +8,13 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 def test_zend_is_installed(host):
-    containers = host.docker.get_containers()
-    zend = next((c for c in containers if c.name == 'zend'), None)
+    zend_ctr = os.environ['ZEND_DOCKER_CTR_NAME']
+    zend = host.docker(zend_ctr)
     assert zend
 
 
 def test_zend_running(host):
-    zend = host.service('zend')
-    assert zend.is_enabled
+    zend_svc = os.environ['ZEND_SVC_NAME']
+    zend = host.service(zend_svc)
     assert zend.is_running
+    assert zend.is_enabled
