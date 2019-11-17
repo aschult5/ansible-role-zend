@@ -17,8 +17,9 @@ Available variables are listed below, along with default values (see [defaults/m
 The version of zend to install. Refer to [zen-node tags on Docker Hub](https://hub.docker.com/r/zencash/zen-node/tags) for valid version strings.
 
     zend_svc_name: zend
+    zend_svc_enabled: yes
 
-The name of the systemd service for zend.
+Configuration of the systemd service for zend.
 
     zend_port_p2p: "9033"
     zend_port_rpc: "8231"

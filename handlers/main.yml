@@ -3,6 +3,8 @@
   service:
     name: "{{ zend_svc_name }}.service"
     state: stopped
+    enabled: "{{ zend_svc_enabled }}"
+  ignore_errors: true
   listen: restart zend
   tags: service
 
@@ -20,5 +22,6 @@
   service:
     name: "{{ zend_svc_name }}.service"
     state: started
+    enabled: "{{ zend_svc_enabled }}"
   listen: restart zend
   tags: service

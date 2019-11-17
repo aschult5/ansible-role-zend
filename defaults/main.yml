@@ -1,6 +1,7 @@
 ---
 zend_ver: latest
 zend_svc_name: zend
+zend_svc_enabled: yes
 zend_port_p2p: "9033"
 zend_port_rpc: "8231"
 zend_dir: /mnt/horizen
