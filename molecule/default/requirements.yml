@@ -1,4 +1,2 @@
 - src: geerlingguy.docker
   version: 2.5.3
-- src: geerlingguy.firewall
-  version: 2.4.2

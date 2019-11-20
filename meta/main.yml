@@ -1,11 +1,6 @@
 ---
 dependencies:
   - geerlingguy.docker
-  - role: geerlingguy.firewall
-    vars:
-      firewall_allowed_tcp_ports:
-        - "443"
-        - "{{ zend_port_p2p }}"
 
 galaxy_info:
   role_name: zend

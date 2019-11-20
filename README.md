@@ -6,7 +6,7 @@ Installs and runs Horizen's zend in a container on Ubuntu servers.
 
 ## Requirements
 
-None.
+- Zend P2P port open (see `zend_port_p2p` below)
 
 ## Role Variables
 
@@ -65,7 +65,6 @@ This role does not generate or renew the server certificate.
 
 ## Dependencies
 
-  - geerlingguy.firewall
   - geerlingguy.docker
 
 ## Example Playbook
