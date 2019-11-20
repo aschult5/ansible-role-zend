@@ -4,13 +4,8 @@
     name: "{{ zend_svc_name }}.service"
     state: stopped
     enabled: "{{ zend_svc_enabled }}"
-  ignore_errors: true
   listen: restart zend
   tags: service
-
-- name: systemd daemon-reload
-  systemd:
-    daemon_reload: true
 
 - name: docker network connect
   docker_network:
