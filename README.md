@@ -6,6 +6,7 @@ Installs and runs Horizen's zend in a container on Ubuntu servers.
 
 ## Requirements
 
+- `zend_user_name` user exists.
 - Zend P2P port open (see `zend_port_p2p` below)
 
 ## Role Variables
@@ -16,10 +17,9 @@ Available variables are listed below, along with default values (see [defaults/m
 
 The version of zend to install. Refer to [zen-node tags on Docker Hub](https://hub.docker.com/r/zencash/zen-node/tags) for valid version strings.
 
-    zend_svc_name: zend
-    zend_svc_enabled: yes
+    zend_user_name: zenops
 
-Configuration of the systemd service for zend.
+Name of the existing user that will own `zend_dir` and will run `zend`.
 
     zend_port_p2p: "9033"
     zend_port_rpc: "8231"
@@ -33,17 +33,10 @@ The RPC port *is not* published to the internet.
 Absolute path to the directory that will be mounted onto the container.
 This directory corresponds to `~/.zen` from typical operation.
 
-    zend_user_name: zenops
-    zend_user_id: 1001
-    zend_user_home: /home/{{ zend_user_name }}
-    zend_user_shell: /bin/bash
-    zend_user_groups_default: [ 'adm', 'systemd-journal', 'sudo' ]
-    zend_user_groups: []
+    zend_svc_name: zend
+    zend_svc_enabled: yes
 
-Variables to configure the server user that will own `zend_dir` and will run `zend`.
-If there is an existing user you wish to use, modify these variables for that user.
-Unless you have good reason to, you shouldn't modify `zend_user_groups_default`.
-Instead, specify additional groups in `zend_user_groups`.
+Configuration of the systemd service for zend.
 
     zend_docker_host: unix:///var/run/docker.sock
     zend_docker_ctr_name: zend

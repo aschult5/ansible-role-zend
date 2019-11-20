@@ -6,6 +6,10 @@
     docker_service_state: stopped
     docker_service_enabled: false
     docker_restart_handler_state: stopped
+    zend_user_name: zenops
+    zend_user_id: 9001
+    zend_group_name: zenops
+    zend_group_id: 9001
 
   pre_tasks:
     - name: Update apt cache
@@ -15,6 +19,21 @@
     - name: Install systemd-sysv
       apt: name=systemd-sysv
       when: ansible_os_family == 'Debian'
+
+    - name: Create group
+      group:
+        gid: "{{ zend_group_id }}"
+        name: "{{ zend_group_name }}"
+
+    - name: Create user
+      user:
+        name: "{{ zend_user_name }}"
+        uid: "{{ zend_user_id }}"
+        comment: "{{ zend_user_name }}"
+        shell: /bin/bash
+        groups: adm, systemd-journal, sudo, {{ zend_group_name }}
+        home: /home/{{ zend_user_name }}
+
 
   roles:
     - role: aschult5.zend

@@ -1,8 +1,4 @@
 ---
-- import_tasks: user.yml
-  tags:
-    - always
-
 - name: Create zend directory
   tags:
     - always
