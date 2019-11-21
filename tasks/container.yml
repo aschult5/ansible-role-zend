@@ -16,7 +16,6 @@
     ipam_config:
       - subnet: "{{ zend_docker_net_subnet }}"
         gateway: "{{ zend_docker_net_gateway }}"
-  notify: docker network connect
 
 - name: zend docker container
   docker_container:
@@ -27,6 +26,10 @@
     restart_policy: unless-stopped
     log_driver: journald
     stop_timeout: 600  # seconds
+    networks:
+      - name: "{{ zend_docker_net_name }}"
+        ipv4_address: "{{ zend_docker_ipv4 }}"
+    purge_networks: yes
     tmpfs:
       - /tmp
       - /run

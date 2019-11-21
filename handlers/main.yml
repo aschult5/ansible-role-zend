@@ -4,9 +4,3 @@
     name: "{{ zend_svc_name }}.service"
     state: restarted
     enabled: "{{ zend_svc_enabled }}"
-
-- name: docker network connect
-  docker_network:
-    name: "{{ zend_docker_net_name }}"
-    docker_host: "{{ zend_docker_host }}"
-    connected: "{{  [zend_docker_ctr_name] | union(zend_docker_net_connected) }}"

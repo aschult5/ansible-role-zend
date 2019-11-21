@@ -23,6 +23,12 @@ def test_zend_container(host):
     assert ctr
     assert ctr.is_running
 
+    # Check network
+    ctr_net_name = os.environ['ZEND_DOCKER_NET_NAME']
+    ctr_net = ctr.inspect()['NetworkSettings']['Networks'].get(ctr_net_name)
+    assert ctr_net
+    assert ctr_net['IPAddress'] == os.environ['ZEND_DOCKER_IPV4']
+
 
 def test_zend_service(host):
     svc_name = os.environ['ZEND_SVC_NAME']

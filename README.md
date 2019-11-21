@@ -43,12 +43,9 @@ Configuration of the systemd service for zend.
     zend_docker_net_name: ZenNet
     zend_docker_net_subnet: 172.42.0.0/24
     zend_docker_net_gateway: 172.42.0.254
-    zend_docker_net_connected: []
     zend_docker_ipv4: 172.42.0.1
 
 Variables to configure Docker.
-Note that `zend_docker_ctr_name` always gets connected to `zend_docker_net_name`.
-Specify additional containers to be connected to `zend_docker_net_name` in `zend_docker_net_connected`.
 
     zend_tls_cert_path: ''
     zend_tls_key_path: ''
