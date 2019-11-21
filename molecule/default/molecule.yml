@@ -24,8 +24,6 @@ provisioner:
       all:
         vars:
           # Note: vars defined here should probably be copied under verifier.
-          # zend_docker_host is an exception, since inventory variables are
-          # for inside the instance, while verifier variables are for outside.
           zend_docker_host: unix:///mnt/docker.sock
           zend_svc_name: ZendSvc
           zend_docker_ctr_name: ZendCtr
@@ -37,6 +35,7 @@ verifier:
   lint:
     name: flake8
   env:
+    ZEND_DOCKER_HOST: unix:///mnt/docker.sock
     ZEND_SVC_NAME: ZendSvc
     ZEND_DOCKER_CTR_NAME: ZendCtr
     ZEND_DOCKER_NET_NAME: ZendNet
