@@ -19,6 +19,7 @@
       docker_container:
         name: "{{ zend_docker_ctr_name }}"
         docker_host: "{{ zend_docker_host }}"
+        stop_timeout: "{{ zend_docker_ctr_stop_timeout }}"
         state: absent
 
     - name: Delete docker_network

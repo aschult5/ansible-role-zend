@@ -40,6 +40,7 @@ Configuration of the systemd service for zend.
 
     zend_docker_host: unix:///var/run/docker.sock
     zend_docker_ctr_name: zend
+    zend_docker_ctr_stop_timeout: 600
     zend_docker_net_name: ZenNet
     zend_docker_net_subnet: 172.42.0.0/24
     zend_docker_net_gateway: 172.42.0.254

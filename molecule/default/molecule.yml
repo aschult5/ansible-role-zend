@@ -27,6 +27,7 @@ provisioner:
           zend_docker_host: unix:///mnt/docker.sock
           zend_svc_name: ZendSvc
           zend_docker_ctr_name: ZendCtr
+          zend_docker_ctr_stop_timeout: 300
           zend_docker_net_name: ZendNet
           zend_docker_ipv4: 172.42.0.5
   lint:
