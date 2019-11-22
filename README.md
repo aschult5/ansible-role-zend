@@ -48,6 +48,15 @@ Configuration of the systemd service for zend.
 
 Variables to configure Docker.
 
+    zend_zcash_srcvol: zcash-params
+
+Source docker volume to store zcash-params from `zen-fetch-params`.
+
+    zend_ipv4: ''
+    zend_ipv6: ''
+
+External IP addresses to be used by zend.
+
     zend_tls_cert_path: ''
     zend_tls_key_path: ''
 

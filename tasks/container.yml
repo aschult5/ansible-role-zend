@@ -43,7 +43,7 @@
       - "{{ zend_port_p2p }}:{{ zend_port_p2p }}"
   vars:
     zend_volume: "{{ [zend_dir, '/mnt/zen'] | join(':') }}"
-    zcash_volume: zcash-params:/mnt/zcash-params
+    zcash_volume: "{{ [zend_zcash_srcvol, '/mnt/zcash-params'] | join(':') }}"
     tls_mntdir: /mnt/cert
     tls_srcdir: "{{ zend_tls_cert_path|dirname if zend_tls_cert_path|d('',true) and zend_tls_key_path|d('',true) else none }}"
     tls_volume: "{{ [tls_srcdir, tls_mntdir, 'ro'] | join(':') if tls_srcdir|d('',true) else none }}"
