@@ -1,12 +1,6 @@
 ---
 - name: pip docker
-  pip:
-    name: docker
-
-- name: sudo group id
-  getent:
-    database: group
-    key: sudo
+  pip: name=docker
 
 - name: zen docker network
   docker_network:
