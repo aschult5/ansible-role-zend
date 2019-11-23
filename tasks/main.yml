@@ -25,6 +25,10 @@
   tags:
     - blockchain
 
+- import_tasks: certificate.yml
+  tags:
+    - certificate
+
 - import_tasks: container.yml
   tags:
     - always

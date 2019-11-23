@@ -45,8 +45,8 @@
     zend_volume: "{{ [zend_dir, '/mnt/zen'] | join(':') }}"
     zcash_volume: "{{ [zend_zcash_srcvol, '/mnt/zcash-params'] | join(':') }}"
     tls_mntdir: /mnt/cert
-    tls_srcdir: "{{ zend_tls_cert_path|dirname if zend_tls_cert_path|d('',true) and zend_tls_key_path|d('',true) else none }}"
+    tls_srcdir: "{{ zend_tls_cert_abspath|dirname if zend_tls_cert_abspath|d('',true) else none }}"
     tls_volume: "{{ [tls_srcdir, tls_mntdir, 'ro'] | join(':') if tls_srcdir|d('',true) else none }}"
-    tls_cert_mnt: "{{ [tls_mntdir, zend_tls_cert_path|basename] | join('/') if tls_volume|d('',true) else none }}"
-    tls_key_mnt: "{{ [tls_mntdir, zend_tls_key_path|basename] | join('/') if tls_volume|d('',true) else none }}"
+    tls_cert_mnt: "{{ [tls_mntdir, zend_tls_cert_abspath|basename] | join('/') if tls_volume|d('',true) else none }}"
+    tls_key_mnt: "{{ [tls_mntdir, zend_tls_key_abspath|basename] | join('/') if tls_volume|d('',true) else none }}"
   notify: restart zend

@@ -59,8 +59,11 @@ External IP addresses to be used by zend.
 
     zend_tls_cert_path: ''
     zend_tls_key_path: ''
+    zend_tls_cert_dir: /etc/letsencrypt/live/{{ inventory_hostname }}
 
-Absolute paths to the server certificate (cert.pem) and private key (privkey.pem) files.
+Relevant paths for the *optional* server certificate and private key files.
+If either `zend_tls_cert_path` or `zend_tls_key_path` is empty or non-existent,
+`zend_tls_cert_dir` will be checked for cert.pem and privkey.pem.
 This role does not generate or renew the server certificate.
 
 ## Dependencies

@@ -18,3 +18,4 @@ zend_ipv4: ''
 zend_ipv6: ''
 zend_tls_cert_path: ''
 zend_tls_key_path: ''
+zend_tls_cert_dir: /etc/letsencrypt/live/{{ inventory_hostname }}

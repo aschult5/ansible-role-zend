@@ -1,0 +1,38 @@
+---
+- name: Check for specific TLS cert file
+  when: zend_tls_cert_path | bool
+  stat:
+    path: "{{ zend_tls_cert_path }}"
+  register: tls_cert_file_reg
+
+- name: Check for specific TLS key file
+  when: zend_tls_key_path | bool
+  stat:
+    path: "{{ zend_tls_key_path }}"
+  register: tls_key_file_reg
+
+- name: Check for TLS cert file in zend_tls_cert_dir, if necessary
+  when:
+    - tls_cert_file_reg is not skipped
+    - not tls_cert_file_reg.stat.exists
+  stat:
+    path: "{{ zend_tls_cert_dir }}/cert.pem"
+  register: tls_cert_file_reg
+
+- name: Check for TLS key file in zend_tls_cert_dir, if necessary
+  when:
+    - tls_key_file_reg is not skipped
+    - not tls_key_file_reg.stat.exists
+  stat:
+    path: "{{ zend_tls_cert_dir }}/privkey.pem"
+  register: tls_key_file_reg
+
+- name: Set TLS cert and key file facts
+  when:
+    - tls_cert_file_reg is not skipped
+    - tls_key_file_reg is not skipped
+    - tls_cert_file_reg.stat.exists
+    - tls_key_file_reg.stat.exists
+  set_fact:
+    zend_tls_cert_abspath: "{{ tls_cert_file_reg.stat.lnk_source | d(tls_cert_file_reg.stat.path) }}"
+    zend_tls_key_abspath: "{{ tls_key_file_reg.stat.lnk_source | d(tls_key_file_reg.stat.path) }}"
