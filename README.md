@@ -65,6 +65,7 @@ Relevant paths for the *optional* server certificate and private key files.
 If either `zend_tls_cert_path` or `zend_tls_key_path` is empty or non-existent,
 `zend_tls_cert_dir` will be checked for cert.pem and privkey.pem.
 This role does not generate or renew the server certificate.
+This role chgrps the certificate files' parent directory to `sudo`.
 
 ## Dependencies
 

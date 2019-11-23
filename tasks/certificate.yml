@@ -27,12 +27,41 @@
     path: "{{ zend_tls_cert_dir }}/privkey.pem"
   register: tls_key_file_reg
 
-- name: Set TLS cert and key file facts
+- name: TLS files exist
   when:
     - tls_cert_file_reg is not skipped
     - tls_key_file_reg is not skipped
     - tls_cert_file_reg.stat.exists
     - tls_key_file_reg.stat.exists
-  set_fact:
-    zend_tls_cert_abspath: "{{ tls_cert_file_reg.stat.lnk_source | d(tls_cert_file_reg.stat.path) }}"
-    zend_tls_key_abspath: "{{ tls_key_file_reg.stat.lnk_source | d(tls_key_file_reg.stat.path) }}"
+  block:
+  - name: Set TLS cert and key file facts
+    set_fact:
+      zend_tls_cert_abspath: "{{ tls_cert_file_reg.stat.lnk_source | d(tls_cert_file_reg.stat.path) }}"
+      zend_tls_key_abspath: "{{ tls_key_file_reg.stat.lnk_source | d(tls_key_file_reg.stat.path) }}"
+
+  - name: Assert that cert and key files live in same directory
+    assert:
+      that: zend_tls_cert_abspath | dirname == zend_tls_key_abspath | dirname
+
+  - name: Set cert dir group to sudo
+    file:
+      path: "{{ zend_tls_cert_abspath | dirname }}"
+      state: directory
+      recurse: yes
+      group: sudo
+
+  - name: Check cert file readability
+    become: yes
+    become_user: "{{ zend_user_name }}"
+    stat:
+      path: "{{ zend_tls_cert_abspath }}"
+    register: tls_cert_file_reg
+    failed_when: not tls_cert_file_reg.stat.readable
+
+  - name: Check key file readability
+    become: yes
+    become_user: "{{ zend_user_name }}"
+    stat:
+      path: "{{ zend_tls_key_abspath }}"
+    register: tls_key_file_reg
+    failed_when: not tls_key_file_reg.stat.readable
