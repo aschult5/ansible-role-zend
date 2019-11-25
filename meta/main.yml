@@ -1,6 +1,5 @@
 ---
-dependencies:
-  - geerlingguy.docker
+dependencies: []
 
 galaxy_info:
   role_name: zend

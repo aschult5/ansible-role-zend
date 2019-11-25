@@ -6,6 +6,7 @@ Installs and runs Horizen's zend in a container on Ubuntu servers.
 
 ## Requirements
 
+- Docker installed.
 - `zend_user_name` user exists.
 - Zend P2P port open (see `zend_port_p2p` below)
 
@@ -69,7 +70,7 @@ This role chgrps the certificate files' parent directory to `sudo`.
 
 ## Dependencies
 
-  - geerlingguy.docker
+- None
 
 ## Example Playbook
 

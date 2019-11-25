@@ -2,10 +2,6 @@
 - name: Converge
   hosts: all
   vars:
-    docker_install_compose: false
-    docker_service_state: stopped
-    docker_service_enabled: false
-    docker_restart_handler_state: stopped
     zend_user_name: zenops
     zend_user_id: 9001
     zend_group_name: zenops
@@ -34,6 +30,12 @@
         groups: adm, systemd-journal, sudo, {{ zend_group_name }}
         home: /home/{{ zend_user_name }}
 
-
   roles:
+    - role: geerlingguy.docker
+      vars:
+        docker_install_compose: false
+        docker_service_state: stopped
+        docker_service_enabled: false
+        docker_restart_handler_state: stopped
+
     - role: aschult5.zend
