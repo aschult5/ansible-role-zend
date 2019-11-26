@@ -65,8 +65,8 @@
       - /run
     volumes: "{{ [ zend_volume, zcash_volume, tls_volume if tls_volume|d('',true) else none ] | reject('none') | list }}"
     env:
-        LOCAL_USER_ID: "{{ zend_user_id|d('9001',true) }}"
-        LOCAL_GRP_ID: "{{ zend_group_id|d('9001',true) }}"
+        LOCAL_USER_ID: "{{ zend_user_id }}"
+        LOCAL_GRP_ID: "{{ zend_group_id }}"
         RPC_ALLOWIP_PRESET: ANY
         RPC_ALLOWIP: "{{ zend_docker_ipv4|d('',true) }}"
         RPC_PORT: "{{ zend_port_rpc }}"

@@ -1,4 +1,27 @@
 ---
+- name: Create/Get zend group
+  group:
+    name: "{{ zend_group_name }}"
+    gid: "{{ zend_group_id | d(omit, true) }}"
+    system: yes
+  register: zend_group_info
+
+- name: Create/Get zend user
+  user:
+    name: "{{ zend_user_name }}"
+    uid: "{{ zend_user_id | d(omit, true) }}"
+    groups:
+      - "{{ zend_group_name }}"
+    append: yes
+    create_home: no
+    system: yes
+  register: zend_user_info
+
+- name: Set zend user/group IDs
+  set_fact:
+    zend_group_id: "{{ zend_group_info.gid }}"
+    zend_user_id: "{{ zend_user_info.uid }}"
+
 - name: Create zend directory
   tags:
     - always

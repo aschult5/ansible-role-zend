@@ -40,3 +40,10 @@ def test_zend_service(host):
     zend_svc = host.service(svc_name)
     assert zend_svc.is_running
     assert zend_svc.is_enabled
+
+
+def test_zend_user(host):
+    u = host.user(name=os.environ['ZEND_USER_NAME'])
+
+    assert u
+    assert str(u.uid) == os.environ['ZEND_USER_ID']

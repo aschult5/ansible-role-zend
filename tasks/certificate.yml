@@ -43,12 +43,12 @@
     assert:
       that: zend_tls_cert_abspath | dirname == zend_tls_key_abspath | dirname
 
-  - name: Set cert dir group to sudo
+  - name: Set cert dir group
     file:
       path: "{{ zend_tls_cert_abspath | dirname }}"
       state: directory
       recurse: yes
-      group: sudo
+      group: "{{ zend_group_name }}"
 
   - name: Check cert file readability
     become: yes

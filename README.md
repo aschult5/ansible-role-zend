@@ -7,7 +7,6 @@ Installs and runs Horizen's zend in a container on Ubuntu servers.
 ## Requirements
 
 - Docker installed.
-- `zend_user_name` user exists.
 - Zend P2P port open (see `zend_port_p2p` below)
 
 ## Role Variables
@@ -19,8 +18,10 @@ Available variables are listed below, along with default values (see [defaults/m
 The version of zend to install. Refer to [zen-node tags on Docker Hub](https://hub.docker.com/r/zencash/zen-node/tags) for valid version strings.
 
     zend_user_name: zenops
+    zend_group_name: zenops
 
-Name of the existing user that will own `zend_dir` and will run `zend`.
+Name of the user/group that will own `zend_dir` and will run `zend`.
+If the user/group doesn't already exist, it will be created as a system user/group.
 
     zend_port_p2p: "9033"
     zend_port_rpc: "8231"
@@ -66,7 +67,7 @@ Relevant paths for the *optional* server certificate and private key files.
 If either `zend_tls_cert_path` or `zend_tls_key_path` is empty or non-existent,
 `zend_tls_cert_dir` will be checked for cert.pem and privkey.pem.
 This role does not generate or renew the server certificate.
-This role chgrps the certificate files' parent directory to `sudo`.
+This role chgrps the certificate files' parent directory to `zend_group_name`.
 
 ## Dependencies
 

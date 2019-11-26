@@ -25,6 +25,8 @@ provisioner:
         vars:
           # Note: vars defined here should probably be copied under verifier.
           zend_docker_host: unix:///mnt/docker.sock
+          zend_user_name: zenops
+          zend_user_id: '9042'
           zend_svc_name: ZendSvc
           zend_docker_ctr_name: ZendCtr
           zend_docker_ctr_stop_timeout: 300
@@ -39,6 +41,8 @@ verifier:
     name: flake8
   env:
     ZEND_DOCKER_HOST: unix:///mnt/docker.sock
+    ZEND_USER_NAME: zenops
+    ZEND_USER_ID: '9042'
     ZEND_SVC_NAME: ZendSvc
     ZEND_DOCKER_CTR_NAME: ZendCtr
     ZEND_DOCKER_NET_NAME: ZendNet

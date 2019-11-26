@@ -1,6 +1,7 @@
 ---
 zend_ver: latest
 zend_user_name: zenops
+zend_group_name: zenops
 zend_svc_name: zend
 zend_svc_enabled: yes
 zend_port_p2p: "9033"
