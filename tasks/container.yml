@@ -2,6 +2,42 @@
 - name: pip docker
   pip: name=docker
 
+- name: zcash-params volume info
+  docker_volume_info:
+    name: "{{ zend_zcash_srcvol }}"
+    docker_host: "{{ zend_docker_host }}"
+  register: zend_zcash_srcvol_info
+  tags: prefetch
+
+- name: zend docker container info
+  docker_container_info:
+    name: "{{ zend_docker_ctr_name }}"
+    docker_host: "{{ zend_docker_host }}"
+  register: zend_docker_ctr_info
+  tags: prefetch
+
+- name: zen-fetch-params before creating
+  when:
+    - not zend_zcash_srcvol_info.exists
+    - not zend_docker_ctr_info.exists
+  docker_container:
+    name: zen-fetch-params
+    docker_host: "{{ zend_docker_host }}"
+    image: zencash/zen-node:{{ zend_ver }}
+    state: started
+    command: zen-fetch-params
+    detach: no
+    volumes:
+    - "{{ [zend_zcash_srcvol, '/mnt/zcash-params'] | join(':') }}"
+    env:
+      LOCAL_USER_ID: "{{ zend_user_id }}"
+      LOCAL_GRP_ID: "{{ zend_group_id }}"
+  register: zen_fetch_params
+  until: zen_fetch_params is success
+  retries: 5
+  delay: 10
+  tags: prefetch
+
 - name: zen docker network
   docker_network:
     name: "{{ zend_docker_net_name }}"

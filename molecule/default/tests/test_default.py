@@ -24,10 +24,15 @@ def test_zend_container(host):
     assert ctr.is_running
 
     # Check network
-    ctr_net_name = os.environ['ZEND_DOCKER_NET_NAME']
-    ctr_net = ctr.inspect()['NetworkSettings']['Networks'].get(ctr_net_name)
-    assert ctr_net
-    assert ctr_net['IPAddress'] == os.environ['ZEND_DOCKER_IPV4']
+    net_name = os.environ['ZEND_DOCKER_NET_NAME']
+    net = ctr.inspect()['NetworkSettings']['Networks'].get(net_name)
+    assert net
+    assert net['IPAddress'] == os.environ['ZEND_DOCKER_IPV4']
+
+    # Check volume
+    vol_str = os.environ['ZEND_ZCASH_SRCVOL']
+    binds = ctr.inspect()['HostConfig']['Binds']
+    assert filter(lambda k: vol_str in k, binds)
 
 
 def test_zend_service(host):

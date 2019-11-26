@@ -30,6 +30,7 @@ provisioner:
           zend_docker_ctr_stop_timeout: 300
           zend_docker_net_name: ZendNet
           zend_docker_ipv4: 172.42.0.5
+          zend_zcash_srcvol: zcash-params
   lint:
     name: ansible-lint
 verifier:
@@ -42,3 +43,4 @@ verifier:
     ZEND_DOCKER_CTR_NAME: ZendCtr
     ZEND_DOCKER_NET_NAME: ZendNet
     ZEND_DOCKER_IPV4: 172.42.0.5
+    ZEND_ZCASH_SRCVOL: zcash-params
