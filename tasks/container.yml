@@ -27,6 +27,7 @@
     state: started
     command: zen-fetch-params
     detach: no
+    auto_remove: yes
     volumes:
     - "{{ [zend_zcash_srcvol, '/mnt/zcash-params'] | join(':') }}"
     env:
