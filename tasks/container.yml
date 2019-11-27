@@ -76,6 +76,9 @@
         TLS_CERT_PATH: "{{ tls_cert_mnt | d('',true) }}"
         TLS_KEY_PATH: "{{ tls_key_mnt | d('',true) }}"
         OPTS: "-rpcworkqueue=512 -server=1 -listen=1 -txindex=1 -logtimestamps=1"
+    exposed_ports:
+      - "{{ zend_port_p2p }}"
+      - "{{ zend_port_rpc }}"
     published_ports:
       - "{{ zend_port_p2p }}:{{ zend_port_p2p }}"
   vars:

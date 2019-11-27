@@ -33,6 +33,8 @@ provisioner:
           zend_docker_net_name: ZendNet
           zend_docker_ipv4: 172.42.0.5
           zend_zcash_srcvol: zcash-params
+          zend_port_p2p: '9034'
+          zend_port_rpc: '8232'
   lint:
     name: ansible-lint
 verifier:
@@ -48,3 +50,5 @@ verifier:
     ZEND_DOCKER_NET_NAME: ZendNet
     ZEND_DOCKER_IPV4: 172.42.0.5
     ZEND_ZCASH_SRCVOL: zcash-params
+    ZEND_PORT_P2P: '9034'
+    ZEND_PORT_RPC: '8232'

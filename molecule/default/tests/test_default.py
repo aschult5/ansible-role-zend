@@ -34,6 +34,20 @@ def test_zend_container(host):
     binds = ctr.inspect()['HostConfig']['Binds']
     assert filter(lambda k: vol_str in k, binds)
 
+    # Check ports
+    port_p2p_num = os.environ['ZEND_PORT_P2P']
+    port_rpc_num = os.environ['ZEND_PORT_RPC']
+    ports = ctr.inspect()['NetworkSettings']['Ports']
+
+    # ...p2p port should be published
+    port_p2p = next(k for k in ports.keys() if port_p2p_num in k)
+    assert ports[port_p2p]
+    assert filter(lambda p: p.get('HostPort') == port_p2p_num, ports[port_p2p])
+
+    # ...rpc port should NOT be published
+    port_rpc = next(k for k in ports.keys() if port_rpc_num in k)
+    assert not ports[port_rpc]
+
 
 def test_zend_service(host):
     svc_name = os.environ['ZEND_SVC_NAME']
