@@ -1,6 +1,6 @@
 # Ansible Role: zend (Horizen)
 
-[![Build Status](https://travis-ci.org/aschult5/ansible-role-zend.svg?branch=master)](https://travis-ci.org/aschult5/ansible-role-zend)
+[![Build Status](https://travis-ci.com/aschult5/ansible-role-zend.svg?branch=master)](https://travis-ci.com/aschult5/ansible-role-zend)
 
 Installs and runs Horizen's zend in a container on Ubuntu servers.
 
