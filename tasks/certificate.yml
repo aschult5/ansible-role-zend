@@ -13,16 +13,14 @@
 
 - name: Check for TLS cert file in zend_tls_cert_dir, if necessary
   when:
-    - tls_cert_file_reg is not skipped
-    - not tls_cert_file_reg.stat.exists
+    - not (tls_cert_file_reg.stat.exists | d(false))
   stat:
     path: "{{ zend_tls_cert_dir }}/cert.pem"
   register: tls_cert_file_reg
 
 - name: Check for TLS key file in zend_tls_cert_dir, if necessary
   when:
-    - tls_key_file_reg is not skipped
-    - not tls_key_file_reg.stat.exists
+    - not (tls_key_file_reg.stat.exists | d(false))
   stat:
     path: "{{ zend_tls_cert_dir }}/privkey.pem"
   register: tls_key_file_reg
