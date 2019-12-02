@@ -27,17 +27,20 @@ def test_zend_container(host):
     net_name = os.environ['ZEND_DOCKER_NET_NAME']
     net = ctr.inspect()['NetworkSettings']['Networks'].get(net_name)
     assert net
+    print(net)
     assert net['IPAddress'] == os.environ['ZEND_DOCKER_IPV4']
 
     # Check volume
     vol_str = os.environ['ZEND_ZCASH_SRCVOL']
     binds = ctr.inspect()['HostConfig']['Binds']
+    print(binds)
     assert filter(lambda k: vol_str in k, binds)
 
     # Check ports
     port_p2p_num = os.environ['ZEND_PORT_P2P']
     port_rpc_num = os.environ['ZEND_PORT_RPC']
     ports = ctr.inspect()['NetworkSettings']['Ports']
+    print(ports)
 
     # ...p2p port should be published
     port_p2p = next(k for k in ports.keys() if port_p2p_num in k)
@@ -58,6 +61,7 @@ def test_zend_service(host):
 
 def test_zend_user(host):
     u = host.user(name=os.environ['ZEND_USER_NAME'])
-
     assert u
+    print(u)
+
     assert str(u.uid) == os.environ['ZEND_USER_ID']
