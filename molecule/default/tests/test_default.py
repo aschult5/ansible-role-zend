@@ -12,7 +12,7 @@ def test_host(host):
     docker_sock = os.environ['ZEND_DOCKER_HOST'].replace('unix://', '', 1)
     assert host.file(docker_sock)
     if docker_sock != docker_sock_default:
-        cmd = host.run('ln -s {} {}'.format(docker_sock, docker_sock_default))
+        cmd = host.run('ln -sf {} {}'.format(docker_sock, docker_sock_default))
         assert cmd.rc == 0
 
 
