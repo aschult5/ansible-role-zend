@@ -41,12 +41,14 @@
     assert:
       that: zend_tls_cert_abspath | dirname == zend_tls_key_abspath | dirname
 
-  - name: Set cert dir group
+  - name: Set letsencrypt dir group
+    when: zend_tls_cert_abspath | regex_search('^/etc/letsencrypt')
     file:
-      path: "{{ zend_tls_cert_abspath | dirname }}"
+      path: /etc/letsencrypt
       state: directory
       recurse: yes
       group: "{{ zend_group_name }}"
+      mode: g+x
 
   - name: Check cert file readability
     become: yes
